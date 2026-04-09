@@ -1031,12 +1031,7 @@ section > .shell {
     }
 
     .partner-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: clamp(5.8rem, 8.6vw, 7.4rem);
-      transition: transform 220ms ease, filter 220ms ease;
-      filter: drop-shadow(0 16px 34px rgba(0, 0, 0, 0.24));
+      display: none;
     }
 
     .partner-link:hover,
