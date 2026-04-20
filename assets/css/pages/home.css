@@ -969,11 +969,6 @@ section > .shell {
       display: none;
     }
 
-
-    .partners-section > .shell {
-      min-height: clamp(155px, 19svh, 215px);
-    }
-
     .partners-stage {
       min-height: clamp(145px, 18svh, 195px);
       display: grid;
