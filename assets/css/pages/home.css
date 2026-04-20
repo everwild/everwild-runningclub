@@ -918,38 +918,6 @@ section > .shell {
       max-width: min(36vw, 30rem);
     }
 
-    .brand-visual--club {
-      gap: 1rem;
-    }
-
-    .brand-card-mark {
-      width: clamp(3.4rem, 5vw, 4.5rem);
-      max-height: none;
-      flex: 0 0 auto;
-    }
-
-    .brand-card-club-lockup {
-      display: flex;
-      flex-direction: column;
-      gap: 0.18rem;
-      line-height: 1;
-    }
-
-    .brand-card-club-lockup strong {
-      font-family: var(--heading-font);
-      font-size: clamp(1.15rem, 1.7vw, 1.46rem);
-      letter-spacing: 0.04em;
-      color: var(--white);
-      font-weight: var(--font-heading-weight);
-    }
-
-    .brand-card-club-lockup span {
-      color: rgba(255, 255, 255, 0.74);
-      font-size: 0.84rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
     .brand-divider {
       width: 1px;
       height: clamp(3.9rem, 6vw, 5.2rem);
@@ -964,14 +932,6 @@ section > .shell {
 
     #brands .brand-node--gear .brand-visual img {
       max-width: min(23vw, 21rem);
-    }
-
-    #brands .brand-visual--club {
-      gap: 0.82rem;
-    }
-
-    #brands .brand-card-mark {
-      width: clamp(3rem, 4.35vw, 4rem);
     }
 
     .shop-note {
@@ -1031,7 +991,12 @@ section > .shell {
     }
 
     .partner-link {
-      display: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: clamp(5.8rem, 8.6vw, 7.4rem);
+      transition: transform 220ms ease, filter 220ms ease;
+      filter: drop-shadow(0 16px 34px rgba(0, 0, 0, 0.24));
     }
 
     .partner-link:hover,

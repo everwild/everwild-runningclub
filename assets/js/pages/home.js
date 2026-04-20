@@ -356,18 +356,9 @@
       const frame = root.querySelector(".hero-media-frame");
       const images = Array.from(root.querySelectorAll(".hero-slide img"));
       const mobileQuery = window.matchMedia("(max-width: 760px)");
-      let resizeFrameId = null;
-      let lastLayoutWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-      let lastLayoutHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-      let baseViewportHeight = lastLayoutHeight;
-      let heroTopLift = Math.min(root.getBoundingClientRect().top, 0);
+      let frameId = null;
 
-      const syncHeroLayoutMetrics = () => {
-        baseViewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        heroTopLift = Math.min(root.getBoundingClientRect().top, 0);
-      };
-
-      const applyHeroRuntimeHeight = () => {
+      const applyHeroRuntimeHeightOnce = () => {
         if (mobileQuery.matches) {
           document.documentElement.style.removeProperty("--hero-runtime-height");
           return;
@@ -378,79 +369,45 @@
         }
 
         const frameWidth = frame.clientWidth || document.documentElement.clientWidth || window.innerWidth;
-        const loadedImages = images.filter((image) => image.naturalWidth && image.naturalHeight);
+        const slideRatios = images
+          .map((image) => {
+            const naturalWidth = image.naturalWidth || Number(image.getAttribute("width")) || 0;
+            const naturalHeight = image.naturalHeight || Number(image.getAttribute("height")) || 0;
 
-        if (!loadedImages.length) {
+            if (!naturalWidth || !naturalHeight) {
+              return null;
+            }
+
+            return naturalHeight / naturalWidth;
+          })
+          .filter((ratio) => typeof ratio === "number" && Number.isFinite(ratio));
+
+        if (!slideRatios.length) {
           document.documentElement.style.removeProperty("--hero-runtime-height");
           return;
         }
 
-        const imageBoundHeight = Math.min(...loadedImages.map((image) => (
-          frameWidth * (image.naturalHeight / image.naturalWidth)
-        )));
+        const imageBoundHeight = Math.min(...slideRatios.map((ratio) => frameWidth * ratio));
+        const baseViewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const heroTopLift = Math.min(root.getBoundingClientRect().top, 0);
         const requiredHeight = baseViewportHeight - heroTopLift;
         const runtimeHeight = Math.min(requiredHeight, imageBoundHeight);
 
         document.documentElement.style.setProperty("--hero-runtime-height", `${Math.round(runtimeHeight)}px`);
       };
 
-      const queueHeroRuntimeHeight = () => {
-        if (resizeFrameId) {
-          window.cancelAnimationFrame(resizeFrameId);
+      const queueHeroRuntimeHeightOnce = () => {
+        if (frameId) {
+          window.cancelAnimationFrame(frameId);
         }
 
-        resizeFrameId = window.requestAnimationFrame(() => {
-          resizeFrameId = null;
-          applyHeroRuntimeHeight();
+        frameId = window.requestAnimationFrame(() => {
+          frameId = null;
+          applyHeroRuntimeHeightOnce();
         });
       };
 
-      images.forEach((image) => {
-        if (!image.complete) {
-          image.addEventListener("load", queueHeroRuntimeHeight, { once: false });
-        }
-      });
-
-      const handleHeroLayoutResize = () => {
-        const currentWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-        const currentHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        const widthDelta = Math.abs(currentWidth - lastLayoutWidth);
-        const heightDelta = Math.abs(currentHeight - lastLayoutHeight);
-
-        if (widthDelta < 2 && heightDelta < 160) {
-          return;
-        }
-
-        lastLayoutWidth = currentWidth;
-        lastLayoutHeight = currentHeight;
-        syncHeroLayoutMetrics();
-        queueHeroRuntimeHeight();
-      };
-
-      window.addEventListener("resize", handleHeroLayoutResize);
-      window.addEventListener("load", () => {
-        syncHeroLayoutMetrics();
-        queueHeroRuntimeHeight();
-      });
-
-      if (typeof mobileQuery.addEventListener === "function") {
-        mobileQuery.addEventListener("change", () => {
-          lastLayoutWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-          lastLayoutHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-          syncHeroLayoutMetrics();
-          queueHeroRuntimeHeight();
-        });
-      } else if (typeof mobileQuery.addListener === "function") {
-        mobileQuery.addListener(() => {
-          lastLayoutWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-          lastLayoutHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-          syncHeroLayoutMetrics();
-          queueHeroRuntimeHeight();
-        });
-      }
-
-      syncHeroLayoutMetrics();
-      queueHeroRuntimeHeight();
+      queueHeroRuntimeHeightOnce();
     };
 
     const initFadeCarousel = ({
