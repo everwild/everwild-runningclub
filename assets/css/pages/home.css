@@ -965,11 +965,10 @@ section > .shell {
       min-height: clamp(230px, 28svh, 320px);
     }
 
-    .partners-section {
-      background: transparent;
-      padding-top: 2.15rem;
-      padding-bottom: 1.7rem;
+    .partner-link {
+      display: none;
     }
+
 
     .partners-section > .shell {
       min-height: clamp(155px, 19svh, 215px);
