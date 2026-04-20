@@ -30,11 +30,6 @@
   --hero-mobile-copy-padding-bottom: 2.8rem;
 }
 
-.partner-link {
-  display: none;
-}
-
-
 body {
   background: #000000;
   color: var(--text);
@@ -965,11 +960,58 @@ section > .shell {
       min-height: clamp(230px, 28svh, 320px);
     }
 
-
-    .partner-link {
-      display: none;
+    .partners-section {
+      background: transparent;
+      padding-top: 2.15rem;
+      padding-bottom: 1.7rem;
     }
 
+    .partners-section > .shell {
+      min-height: clamp(155px, 19svh, 215px);
+    }
+
+    .partners-stage {
+      min-height: clamp(145px, 18svh, 195px);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      align-items: stretch;
+      gap: 0.78rem;
+    }
+
+    .partners-kicker {
+      justify-self: start;
+    }
+
+    .partner-network {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6rem;
+      align-self: center;
+    }
+
+    .partner-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: clamp(5.8rem, 8.6vw, 7.4rem);
+      transition: transform 220ms ease, filter 220ms ease;
+      filter: drop-shadow(0 16px 34px rgba(0, 0, 0, 0.24));
+    }
+
+    .partner-link:hover,
+    .partner-link:focus-visible {
+      transform: translateY(-4px);
+      filter: drop-shadow(0 24px 44px rgba(0, 0, 0, 0.3));
+    }
+
+    .partner-link img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: min(24rem, 52vw);
+      max-height: clamp(3.5rem, 6vw, 4.8rem);
+    }
 
     .contact-stage {
       min-height: clamp(220px, 28svh, 300px);
