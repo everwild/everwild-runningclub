@@ -30,6 +30,11 @@
   --hero-mobile-copy-padding-bottom: 2.8rem;
 }
 
+.partner-link {
+  display: none;
+}
+
+
 body {
   background: #000000;
   color: var(--text);
