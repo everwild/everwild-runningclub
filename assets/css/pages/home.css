@@ -5,7 +5,7 @@
   --paper: #090b11;
   --stone: #131820;
   --text: #ece7df;
-  --muted: #a39c92;
+  --muted: #c9c2b8;
   --surface: rgba(15, 20, 27, 0.88);
   --surface-strong: rgba(19, 26, 36, 0.96);
   --surface-soft: rgba(255, 255, 255, 0.04);
@@ -225,9 +225,9 @@ section > .shell {
     .hero-copy p {
       margin: 1rem 0 0;
       max-width: var(--hero-subtitle-max-width);
-      font-size: clamp(1rem, 1.1vw, 1.12rem);
+      font-size: clamp(1.18rem, 1.32vw, 1.38rem);
       line-height: 1.75;
-      color: rgba(255, 255, 255, 0.72);
+      color: rgba(255, 255, 255, 0.84);
       text-shadow: 0 0.24rem 1rem rgba(0, 0, 0, 0.3);
     }
 
@@ -244,7 +244,7 @@ section > .shell {
       width: fit-content;
       max-width: none;
       white-space: nowrap;
-      font-size: clamp(1rem, 1.1vw, 1.12rem);
+      font-size: clamp(1.18rem, 1.32vw, 1.38rem);
       line-height: 1.7;
     }
 
@@ -291,26 +291,38 @@ section > .shell {
     }
 
     .section-intro {
+      position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr);
       gap: 1.8rem;
       align-items: end;
       margin-bottom: 2.2rem;
+      padding-top: 0;
     }
 
     .section-kicker {
       display: inline-flex;
       align-items: center;
+      justify-content: flex-start;
+      width: max-content;
+      max-width: 100%;
       margin-bottom: 1rem;
       color: var(--brand-hot);
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      font-size: 0.75rem;
+      font-size: clamp(1.08rem, 1.15vw, 1.28rem);
       font-weight: 800;
     }
 
     .section-kicker::before {
       content: none;
+    }
+
+    .section-intro .section-kicker {
+      position: static;
+      justify-self: start;
+      margin-bottom: 1rem;
+      transform: none;
     }
 
     .section-intro h2 {
@@ -331,17 +343,17 @@ section > .shell {
 
     .section-intro p {
       margin: 0;
-      font-size: 0.98rem;
+      font-size: clamp(1.14rem, 1.18vw, 1.28rem);
       line-height: 1.95;
       color: var(--muted);
     }
 
     .manifesto-intro-note {
       max-width: 24rem;
-      font-size: 0.92rem;
+      font-size: clamp(1.14rem, 1.18vw, 1.28rem);
       line-height: 1.9;
       letter-spacing: 0.01em;
-      color: rgba(255, 255, 255, 0.76);
+      color: rgba(255, 255, 255, 0.84);
     }
 
     #manifesto .section-intro {
@@ -359,7 +371,8 @@ section > .shell {
     }
 
     #manifesto .section-intro .section-kicker {
-      justify-self: center;
+      justify-self: start;
+      justify-content: flex-start;
     }
 
     #manifesto .section-intro h2 {
@@ -420,7 +433,7 @@ section > .shell {
       margin: 0;
       color: var(--muted);
       line-height: 1.82;
-      font-size: 0.97rem;
+      font-size: 1.05rem;
     }
 
     .manifesto-gallery {
@@ -505,10 +518,10 @@ section > .shell {
         linear-gradient(135deg, rgba(255, 0, 100, 0.14), rgba(160, 80, 160, 0.14)),
         rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      color: rgba(255, 255, 255, 0.84);
+      color: rgba(255, 255, 255, 0.9);
       text-align: center;
       line-height: 1.8;
-      font-size: 1rem;
+      font-size: 1.08rem;
       letter-spacing: 0.02em;
     }
 
@@ -607,9 +620,9 @@ section > .shell {
     .route-card p {
       max-width: 32rem;
       margin: 0;
-      color: rgba(255, 255, 255, 0.72);
+      color: rgba(255, 255, 255, 0.84);
       line-height: 1.9;
-      font-size: 0.98rem;
+      font-size: 1.06rem;
       text-shadow: 0 0.28rem 1rem rgba(0, 0, 0, 0.32);
     }
 
@@ -714,7 +727,7 @@ section > .shell {
       margin: 0;
       color: var(--muted);
       line-height: 1.72;
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
 
     .schedule-meta {
@@ -808,7 +821,7 @@ section > .shell {
       margin: 0;
       color: var(--muted);
       line-height: 1.8;
-      font-size: 0.94rem;
+      font-size: 1.03rem;
     }
 
     .pacer-tags {
@@ -938,8 +951,8 @@ section > .shell {
       margin: 0;
       justify-self: center;
       text-align: center;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: clamp(1.14rem, 1.18vw, 1.28rem);
       line-height: 1.7;
     }
 
@@ -991,7 +1004,12 @@ section > .shell {
     }
 
     .partner-link {
-      display: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: clamp(5.8rem, 8.6vw, 7.4rem);
+      transition: transform 220ms ease, filter 220ms ease;
+      filter: drop-shadow(0 16px 34px rgba(0, 0, 0, 0.24));
     }
 
     .partner-link:hover,
@@ -1161,13 +1179,14 @@ section > .shell {
     }
 
     .signup-card {
+      position: relative;
       width: 100%;
       margin: 0 auto;
       display: grid;
       grid-template-columns: minmax(0, 1.14fr) auto;
       align-items: center;
       gap: clamp(1.5rem, 4vw, 3.3rem);
-      padding: clamp(1.75rem, 3vw, 2.45rem) clamp(1.5rem, 3vw, 2.2rem);
+      padding: clamp(3rem, 4.6vw, 3.65rem) clamp(1.5rem, 3vw, 2.2rem) clamp(1.75rem, 3vw, 2.45rem);
       border-radius: var(--card-radius);
       background: rgba(66, 66, 66, 0.94);
       box-shadow:
@@ -1183,8 +1202,11 @@ section > .shell {
     }
 
     .signup-card-kicker {
-      justify-self: start;
-      margin-bottom: 0.08rem;
+      position: absolute;
+      top: clamp(1.05rem, 1.7vw, 1.35rem);
+      left: clamp(1.5rem, 3vw, 2.2rem);
+      margin-bottom: 0;
+      transform: none;
     }
 
     .signup-title {
@@ -1192,13 +1214,14 @@ section > .shell {
       max-width: none;
       font-size: clamp(2.15rem, 4.4vw, 3.55rem);
       line-height: 1.06;
+      color: var(--white);
     }
 
     .signup-card-copy p {
       margin: 0;
       max-width: 35rem;
-      color: rgba(234, 236, 242, 0.72);
-      font-size: 1rem;
+      color: rgba(234, 236, 242, 0.82);
+      font-size: clamp(1.14rem, 1.18vw, 1.28rem);
       line-height: 1.78;
     }
 
@@ -1299,7 +1322,7 @@ section > .shell {
       padding-top: 1.35rem;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: 0.96rem;
     }
 
     .footer-branding {
@@ -1318,8 +1341,8 @@ section > .shell {
     .footer-brand {
       display: block;
       line-height: 1.55;
-      color: rgba(234, 236, 242, 0.72);
-      font-size: 0.9rem;
+      color: rgba(234, 236, 242, 0.82);
+      font-size: 0.96rem;
     }
 
     .footer-brand [data-i18n="footerLeft"] {
@@ -1360,8 +1383,8 @@ section > .shell {
 
     .footer-link,
     .footer-note {
-      color: rgba(234, 236, 242, 0.72);
-      font-size: 0.9rem;
+      color: rgba(234, 236, 242, 0.82);
+      font-size: 0.96rem;
       line-height: 1.55;
       text-decoration: none;
       max-width: 22rem;
@@ -1635,7 +1658,7 @@ section > .shell {
       }
 
       .manifesto-card p {
-        font-size: 0.92rem;
+        font-size: 1rem;
         line-height: 1.72;
       }
 
@@ -1656,7 +1679,7 @@ section > .shell {
       .signup-card {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-        padding: 1.55rem 1.3rem;
+        padding: 3rem 1.3rem 1.55rem;
       }
 
       .signup-card-copy p {

@@ -4,8 +4,8 @@
   --panel-strong: rgba(23, 25, 37, 0.94);
   --border: rgba(255, 255, 255, 0.08);
   --text: #ffffff;
-  --muted: rgba(234, 236, 242, 0.74);
-  --soft: rgba(234, 236, 242, 0.58);
+  --muted: rgba(234, 236, 242, 0.82);
+  --soft: rgba(234, 236, 242, 0.68);
   --brand-soft: rgba(255, 0, 100, 0.12);
   --legal-width: min(92vw, 980px);
   --header-offset: 6.75rem;
@@ -30,13 +30,15 @@ main {
 
 .legal-hero {
   padding: calc(var(--header-offset) + 1.8rem) 0 2.5rem;
+  text-align: center;
 }
 
 .legal-kicker {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
   margin-bottom: 1rem;
   color: rgba(255, 255, 255, 0.64);
-  font-size: 0.72rem;
+  font-size: clamp(1.08rem, 1.15vw, 1.28rem);
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
@@ -52,9 +54,9 @@ main {
 
 .legal-intro {
   max-width: 43rem;
-  margin: 1rem 0 0;
+  margin: 1rem auto 0;
   color: var(--muted);
-  font-size: 1rem;
+  font-size: clamp(1.14rem, 1.18vw, 1.28rem);
   line-height: 1.8;
 }
 
@@ -89,6 +91,7 @@ main {
 .legal-block p {
   margin: 0;
   color: var(--muted);
+  font-size: 1.04rem;
   line-height: 1.82;
 }
 
@@ -102,6 +105,7 @@ main {
   display: grid;
   gap: 0.5rem;
   color: var(--muted);
+  font-size: 1.04rem;
   line-height: 1.78;
 }
 
@@ -118,13 +122,14 @@ main {
 
 .legal-definition dt {
   color: var(--soft);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   line-height: 1.55;
 }
 
 .legal-definition dd {
   margin: 0;
   color: #fff;
+  font-size: 1.04rem;
   line-height: 1.68;
 }
 
@@ -175,6 +180,7 @@ main {
 .legal-card p {
   margin: 0;
   color: var(--muted);
+  font-size: 1.04rem;
   line-height: 1.78;
 }
 
@@ -189,6 +195,7 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: var(--brand-soft);
   color: rgba(255, 255, 255, 0.88);
+  font-size: 1.04rem;
   line-height: 1.7;
 }
 
@@ -204,8 +211,8 @@ main {
   gap: 1rem;
   padding-top: 1.2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(234, 236, 242, 0.62);
-  font-size: 0.88rem;
+  color: rgba(234, 236, 242, 0.82);
+  font-size: 0.96rem;
   line-height: 1.65;
 }
 

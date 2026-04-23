@@ -1,9 +1,9 @@
 ﻿:root {
   --ink: #ece7df;
-  --ink-soft: #d1c8bc;
+  --ink-soft: #ded6cb;
   --paper: #07090d;
   --sand: #090b11;
-  --muted: #a39c92;
+  --muted: #c9c2b8;
   --surface: rgba(15, 20, 27, 0.9);
   --surface-strong: rgba(19, 26, 36, 0.96);
   --shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
@@ -64,9 +64,11 @@ body::before {
     .eyebrow {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
+      width: 100%;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      font-size: 0.82rem;
+      font-size: clamp(1.08rem, 1.15vw, 1.28rem);
       color: rgba(255, 255, 255, 0.7);
     }
 
@@ -87,7 +89,8 @@ body::before {
 
     .intro-panel p {
       margin: 0;
-      color: rgba(255, 255, 255, 0.74);
+      color: rgba(255, 255, 255, 0.84);
+      font-size: clamp(1.14rem, 1.18vw, 1.28rem);
       line-height: 1.92;
     }
 
@@ -117,9 +120,9 @@ body::before {
 
     .bullet-list span {
       display: block;
-      color: rgba(255, 255, 255, 0.76);
+      color: rgba(255, 255, 255, 0.84);
       line-height: 1.7;
-      font-size: 0.96rem;
+      font-size: 1.04rem;
     }
 
     .action-row {
@@ -193,6 +196,7 @@ body::before {
     .form-head p {
       margin: 0.8rem 0 0;
       color: var(--muted);
+      font-size: clamp(1.14rem, 1.18vw, 1.28rem);
       line-height: 1.92;
     }
 
@@ -268,7 +272,7 @@ body::before {
 
     .field-hint {
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.98rem;
       line-height: 1.6;
     }
 
@@ -312,6 +316,7 @@ body::before {
       align-items: flex-start;
       gap: 0.7rem;
       color: var(--muted);
+      font-size: 1rem;
       line-height: 1.7;
     }
 
@@ -343,6 +348,7 @@ body::before {
     .status p {
       margin: 0;
       color: var(--muted);
+      font-size: 1rem;
       line-height: 1.7;
     }
 
@@ -386,6 +392,7 @@ body::before {
     .redirect-popup__panel p {
       margin: 0;
       color: var(--muted);
+      font-size: 1rem;
       line-height: 1.75;
     }
 
@@ -407,6 +414,7 @@ body::before {
   resize: vertical;
   background: rgba(255, 255, 255, 0.03);
   color: var(--ink);
+  font-size: 1rem;
 }
 
     .helper-row {
