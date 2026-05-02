@@ -1,4 +1,4 @@
-﻿    const xhsUrl = "https://www.xiaohongshu.com/user/profile/6888df4600000000280300a7";
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/xojrvbbj";
 
     const copy = {
       ja: {
@@ -11,19 +11,16 @@
         navBrands: "公式ストア",
         navSocial: "お問い合わせ",
         navSignup: "参加登録",
-        eyebrow: "ERC 参加フロー",
-        introTitle: "フォームを記入して<br>参加メッセージを整える",
-        introBody: "入力が終わると、このページが参加用メッセージを自動で整え、まずはクリップボードへのコピーを試します。その後、下のボタンから ERC の小紅書プロフィールを開いて送信できます。",
+        eyebrow: "ERC 参加登録",
+        introTitle: "フォームに入力して<br>ERCへ送信",
+        introBody: "必要事項を入力し、送信すると ERC チームに届きます。",
         stepLabelOne: "STEP 01",
         stepBodyOne: "基本情報、参加したい活動、目的、備考を入力してください。",
         stepLabelTwo: "STEP 02",
-        stepBodyTwo: "送信後、このページが ERC に送るための参加メッセージを自動で作成します。",
-        stepLabelThree: "STEP 03",
-        stepBodyThree: "小紅書を開いて、そのままメッセージを貼り付けて送信してください。コピーできなかった場合も、下に全文が残ります。",
-        introPrimary: "小紅書を開く",
-        introSecondary: "ERCに戻る",
-        formTitle: "ERCに<br>参加する",
-        formBody: "入力後、このページが参加概要をまとめます。現時点ではサーバーへ直接送信せず、そのままDMで送れる内容を準備します。",
+        stepBodyTwo: "送信後、ERC が内容を確認し、返信にてご連絡します。",
+        introPrimary: "ERCトップに戻る",
+        formTitle: "ERCに参加する",
+        formBody: "入力後、送信ボタンで ERC チームへ送信されます。",
         labelName: "呼び名",
         labelContact: "WeChat ID / メール",
         labelLanguage: "希望言語",
@@ -34,12 +31,15 @@
         labelGoals: "参加目的",
         labelNotes: "備考",
         notesHint: "けがの状況、最初に参加したい回、東京でランニングクルーに参加するのが初めてかどうかなどを自由に書いてください。",
-        consentText: "このページはまず参加情報を整理してコピーし、最終的な参加可否は ERC からの返信と実際の活動案内によって確定することを理解しました。",
-        submitLabel: "参加メッセージを作成",
-        statusTitle: "参加メッセージを準備しました。",
-        statusBody: "ブラウザが許可していれば、メッセージはすでにクリップボードへコピーされています。下のボタンから小紅書を開いて、そのまま送信できます。",
-        statusPrimary: "小紅書を開く",
-        statusSecondary: "もう一度コピー",
+        consentText: "送信した情報は ERC が受け取り、参加の最終確認は ERC の返信および活動案内に従うことを理解しました。",
+        submitLabel: "送信する",
+        validationTitle: "送信できません",
+        successTitle: "送信しました",
+        successBody: "お問い合わせを受け付けました。ERC からのご連絡をお待ちください。",
+        formspreeFailTitle: "送信に失敗しました",
+        statusTitle: "送信結果",
+        statusBody: "",
+        statusHome: "ERCトップに戻る",
         optionJa: "日本語",
         optionZh: "中文",
         optionEn: "English",
@@ -59,8 +59,6 @@
         goalSocial: "つながり",
         errorSessions: "参加したい活動を少なくとも一つ選んでください。",
         errorConsent: "参加に関する案内を確認してください。",
-        copied: "参加メッセージをコピーしました。下のボタンから小紅書を開いて送信してください。",
-        copiedFallback: "自動コピーはできませんでしたが、下にメッセージを表示しています。手動でコピーして送信してください。",
         messageGreeting: "こんにちは。ERCへの参加を希望しています。",
         messageName: "呼び名",
         messageContact: "WeChat ID / メール",
@@ -74,10 +72,7 @@
         messageClosing: "よろしくお願いいたします。",
         pacePlaceholder: "例: 5:30/km / まだ分からない",
         notesPlaceholder: "例: 東京のランニングクルーは初めてなので、まずは金曜のファンランから参加したいです。",
-        redirectPopupTitle: "参加情報をコピーしました",
-        redirectPopupBody: "参加情報をコピーしました。下のボタンから小紅書を開いて、そのまま貼り付けて送信してください。",
-        redirectPopupPrimary: "小紅書で送信する",
-        redirectPopupSecondary: "このページに戻る"
+        formspreeWarning: "通信エラーが発生しました。しばらくしてから再度お試しいただくか、ページ下部の内容を控えてメールでご連絡ください。"
       },
       zh: {
         pageTitle: "EVERWILD · 报名表",
@@ -89,19 +84,16 @@
         navBrands: "官方商店",
         navSocial: "联系我们",
         navSignup: "立即报名",
-        eyebrow: "ERC 报名流程",
-        introTitle: "填一份表<br>把报名信息整理好",
-        introBody: "填完之后，页面会自动整理并尝试复制一段报名信息。你可以直接打开 ERC 的小红书主页，把内容粘贴后发送。",
+        eyebrow: "ERC 报名",
+        introTitle: "填写报名表<br>提交至 ERC",
+        introBody: "填写完成后点击提交，报名信息将直接发送至 ERC 团队。",
         stepLabelOne: "步骤 01",
         stepBodyOne: "填写你的基本信息、想参加的活动、跑步目标和备注。",
         stepLabelTwo: "步骤 02",
-        stepBodyTwo: "提交后，页面会自动生成一段适合发送给 ERC 的报名消息。",
-        stepLabelThree: "步骤 03",
-        stepBodyThree: "打开小红书主页，把消息粘贴发送即可；如果复制失败，页面下方也会保留完整文本。",
-        introPrimary: "打开小红书",
-        introSecondary: "返回 ERC",
-        formTitle: "加入<br>ERC",
-        formBody: "填写完成后，这个页面会先帮你整理一份报名摘要。当前版本不会把数据直接发送到服务器，而是为你准备一段可以立刻私信发送的内容。",
+        stepBodyTwo: "提交后报名表将发送至 ERC，请等候邮件或消息回复。",
+        introPrimary: "返回 ERC 首页",
+        formTitle: "加入ERC",
+        formBody: "填写完成后点击提交，报名信息将发送至 ERC 团队。",
         labelName: "姓名",
         labelContact: "联系方式",
         labelLanguage: "语言偏好",
@@ -112,12 +104,15 @@
         labelGoals: "加入目标",
         labelNotes: "备注",
         notesHint: "可以填写伤病情况、想先参加哪次活动，或是否第一次在东京参加跑团等。",
-        consentText: "我理解当前页面会先整理并复制报名信息，最终确认仍以 ERC 的回复和实际活动安排为准。",
-        submitLabel: "生成报名信息",
-        statusTitle: "报名信息已准备好。",
-        statusBody: "如果浏览器允许，报名信息已经复制到剪贴板。你现在可以打开小红书，直接粘贴发送。",
-        statusPrimary: "打开小红书",
-        statusSecondary: "再次复制",
+        consentText: "我理解提交后信息将发送至 ERC，最终能否参加以 ERC 的回复与实际活动安排为准。",
+        submitLabel: "提交报名",
+        validationTitle: "无法提交",
+        successTitle: "提交成功",
+        successBody: "我们已收到你的报名信息，请等候 ERC 回复。",
+        formspreeFailTitle: "提交失败",
+        statusTitle: "提交结果",
+        statusBody: "",
+        statusHome: "返回 ERC 首页",
         optionJa: "日语",
         optionZh: "中文",
         optionEn: "English",
@@ -137,8 +132,6 @@
         goalSocial: "社交",
         errorSessions: "请至少选择一项想参加的活动。",
         errorConsent: "请先确认报名说明。",
-        copied: "报名信息已复制。现在可以直接打开小红书发送。",
-        copiedFallback: "浏览器未能自动复制，但报名信息已经生成在下方，你可以手动复制后发送。",
         messageGreeting: "你好 ERC，我想报名参加跑团。",
         messageName: "姓名",
         messageContact: "联系方式",
@@ -152,10 +145,7 @@
         messageClosing: "谢谢，期待参加活动。",
         pacePlaceholder: "例如 5:30/km 或 还不确定",
         notesPlaceholder: "例如：第一次参加东京跑团，想先从周五欢乐跑开始。",
-        redirectPopupTitle: "报名信息已复制",
-        redirectPopupBody: "报名信息已复制。现在可以打开小红书，把刚刚复制的内容直接粘贴发送。",
-        redirectPopupPrimary: "前往小红书发送",
-        redirectPopupSecondary: "留在此页"
+        formspreeWarning: "提交未能完成。请稍后重试，或保存页面下方摘要后通过邮件联系 ERC。"
       },
       en: {
         pageTitle: "EVERWILD · Signup",
@@ -167,19 +157,16 @@
         navBrands: "STORE",
         navSocial: "CONTACT",
         navSignup: "REGISTER",
-        eyebrow: "ERC Signup Flow",
-        introTitle: "Fill one form<br>and prepare your message",
-        introBody: "Once you finish the form, the page prepares a signup message and tries to copy it to your clipboard. You can then open ERC's Xiaohongshu profile and send it directly.",
+        eyebrow: "ERC Signup",
+        introTitle: "Fill the form<br>Submit to ERC",
+        introBody: "Complete the fields and submit—your signup goes straight to the ERC team.",
         stepLabelOne: "Step 01",
         stepBodyOne: "Share your basic info, preferred sessions, goals, and notes.",
         stepLabelTwo: "Step 02",
-        stepBodyTwo: "After submitting, the page generates a message ready to send to ERC.",
-        stepLabelThree: "Step 03",
-        stepBodyThree: "Open Xiaohongshu and paste the message. If copy fails, the text still stays on the page below.",
-        introPrimary: "Open Xiaohongshu",
-        introSecondary: "Back to ERC",
-        formTitle: "Join<br>ERC",
-        formBody: "After you fill this out, the page prepares a signup summary. This version does not send data to a server yet; it creates a message you can immediately send by DM.",
+        stepBodyTwo: "After you submit, ERC reviews your signup and will follow up with you.",
+        introPrimary: "Back to ERC home",
+        formTitle: "Join ERC",
+        formBody: "Submit the form to send your signup to the ERC team.",
         labelName: "Name",
         labelContact: "Contact",
         labelLanguage: "Preferred Language",
@@ -190,12 +177,15 @@
         labelGoals: "Goals",
         labelNotes: "Notes",
         notesHint: "You can mention injuries, which session you want to try first, or whether this is your first running crew in Tokyo.",
-        consentText: "I understand that this page first prepares and copies my signup details, and final confirmation still depends on ERC's reply and session plan.",
-        submitLabel: "Prepare Signup Message",
-        statusTitle: "Your signup message is ready.",
-        statusBody: "If the browser allowed it, the message has already been copied to your clipboard. You can now open Xiaohongshu and paste it directly.",
-        statusPrimary: "Open Xiaohongshu",
-        statusSecondary: "Copy Again",
+        consentText: "I understand my submission is sent to ERC, and final participation depends on ERC's reply and session plan.",
+        submitLabel: "Submit signup",
+        validationTitle: "Cannot submit",
+        successTitle: "Received",
+        successBody: "Thanks—we have your signup and will get back to you.",
+        formspreeFailTitle: "Submission failed",
+        statusTitle: "Result",
+        statusBody: "",
+        statusHome: "Back to ERC home",
         optionJa: "Japanese",
         optionZh: "Chinese",
         optionEn: "English",
@@ -215,8 +205,6 @@
         goalSocial: "Social",
         errorSessions: "Please select at least one session you want to join.",
         errorConsent: "Please confirm the signup note first.",
-        copied: "Your signup message has been copied. Open Xiaohongshu and send it when you're ready.",
-        copiedFallback: "The browser could not copy automatically, but your signup message is ready below for manual copy.",
         messageGreeting: "Hi ERC, I would like to join the running club.",
         messageName: "Name",
         messageContact: "Contact",
@@ -230,10 +218,7 @@
         messageClosing: "Thank you. Looking forward to joining a session.",
         pacePlaceholder: "e.g. 5:30/km or not sure yet",
         notesPlaceholder: "e.g. First Tokyo running crew for me, would like to try Friday fun run first.",
-        redirectPopupTitle: "Signup Copied",
-        redirectPopupBody: "Your signup message has been copied. Open Xiaohongshu below and paste it directly.",
-        redirectPopupPrimary: "Open Xiaohongshu to Send",
-        redirectPopupSecondary: "Stay on This Page"
+        formspreeWarning: "We couldn't complete the submission. Please try again, or copy the summary below and email ERC."
       }
     };
 
@@ -241,12 +226,12 @@
     copy.zh.labelContact = "微信号/邮箱";
     copy.zh.messageName = "称呼";
     copy.zh.messageContact = "微信号/邮箱";
-    copy.zh.introBody = "填完之后，页面会自动整理并尝试复制一段报名信息。你可以直接打开 ERC 的小红书主页，把内容粘贴后发送。";
+    copy.zh.introBody = "填写完成后点击提交，报名信息将直接发送至 ERC 团队。";
     copy.en.labelName = "Preferred Name";
     copy.en.labelContact = "WeChat / Email";
     copy.en.messageName = "Preferred Name";
     copy.en.messageContact = "WeChat / Email";
-    copy.en.introBody = "Once you finish the form, the page prepares a signup message and tries to copy it to your clipboard. You can then open ERC's Xiaohongshu profile and send it directly.";
+    copy.en.introBody = "Complete the fields and submit—your signup goes straight to the ERC team.";
 
     const valueLabels = {
       ja: {
@@ -326,10 +311,6 @@
       statusTitle: document.getElementById("status-title"),
       statusCopy: document.getElementById("status-copy"),
       output: document.getElementById("output"),
-      copyButton: document.getElementById("copy-button"),
-      popup: document.getElementById("redirect-popup"),
-      popupOpen: document.getElementById("redirect-popup-open"),
-      popupClose: document.getElementById("redirect-popup-close"),
       submitButton: document.querySelector('#signup-form button[type="submit"]')
     };
 
@@ -371,15 +352,12 @@
     const showStatus = (title, body, message) => {
       dom.statusTitle.textContent = title;
       dom.statusCopy.textContent = body;
-      dom.output.value = message;
-      dom.output.style.display = message ? "block" : "none";
-      dom.copyButton.style.display = message ? "inline-flex" : "none";
+      const text = typeof message === "string" ? message : "";
+      dom.output.value = text;
+      const hasMessage = Boolean(text);
+      dom.output.hidden = !hasMessage;
+      dom.output.style.display = hasMessage ? "block" : "none";
       dom.status.classList.add("is-visible");
-    };
-
-    const hideRedirectPopup = () => {
-      dom.popup.classList.remove("is-visible");
-      dom.popup.setAttribute("aria-hidden", "true");
     };
 
     const setSubmitState = (busy) => {
@@ -389,23 +367,38 @@
       }
     };
 
-    const showRedirectPopup = () => {
-      dom.popup.classList.add("is-visible");
-      dom.popup.setAttribute("aria-hidden", "false");
-    };
+    const looksLikeEmail = (value) =>
+      typeof value === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
-    const copyMessage = async (message) => {
-      if (!navigator.clipboard) {
-        return false;
+    const submitToFormspree = async (message, sessions, goals) => {
+      const formData = new FormData(dom.form);
+      const labels = valueLabels[currentLanguage];
+      const fd = new FormData();
+      const name = (formData.get("name") || "").toString().trim();
+      const contact = (formData.get("contact") || "").toString().trim();
+      fd.append("name", name);
+      fd.append("contact", contact);
+      if (looksLikeEmail(contact)) {
+        fd.append("_replyto", contact);
       }
-
-      try {
-        await navigator.clipboard.writeText(message);
-        return true;
-      } catch (error) {
-        console.debug("Clipboard copy failed.", error);
-        return false;
+      fd.append("language", labels.language[formData.get("language")] || (formData.get("language") || "").toString());
+      fd.append("experience", labels.experience[formData.get("experience")] || (formData.get("experience") || "").toString());
+      fd.append("pace", (formData.get("pace") || "").toString().trim());
+      fd.append("sessions", sessions.map((value) => labels.sessions[value]).join("; "));
+      fd.append("goals", goals.map((value) => labels.goals[value]).join("; "));
+      fd.append("notes", (formData.get("notes") || "").toString().trim());
+      fd.append("message", message);
+      fd.append("_subject", "Everwild Running Club — Signup");
+      const gotcha = dom.form.querySelector('input[name="_gotcha"]');
+      if (gotcha) {
+        fd.append("_gotcha", (gotcha.value || "").toString());
       }
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        body: fd,
+        headers: { Accept: "application/json" }
+      });
+      return response.ok;
     };
 
     createSiteI18n({
@@ -426,71 +419,36 @@
 
       const bundle = copy[currentLanguage];
       const sessions = getCheckedValues("sessions");
+      const goals = getCheckedValues("goals");
       const consent = dom.consent.checked;
-      hideRedirectPopup();
 
       if (!sessions.length) {
-        showStatus(bundle.statusTitle, bundle.errorSessions, "");
+        showStatus(bundle.validationTitle, bundle.errorSessions, "");
         return;
       }
 
       if (!consent) {
-        showStatus(bundle.statusTitle, bundle.errorConsent, "");
+        showStatus(bundle.validationTitle, bundle.errorConsent, "");
         return;
       }
 
       setSubmitState(true);
       latestMessage = buildMessage();
-      const copied = await copyMessage(latestMessage);
 
-      showStatus(
-        bundle.statusTitle,
-        copied ? bundle.copied : bundle.copiedFallback,
-        latestMessage
-      );
+      let formspreeOk = false;
+      try {
+        formspreeOk = await submitToFormspree(latestMessage, sessions, goals);
+      } catch (error) {
+        console.debug("Formspree request failed.", error);
+        formspreeOk = false;
+      }
 
-      if (copied) {
-        showRedirectPopup();
-        setSubmitState(false);
-        return;
+      if (formspreeOk) {
+        showStatus(bundle.successTitle, bundle.successBody, "");
+      } else {
+        showStatus(bundle.formspreeFailTitle, bundle.formspreeWarning, latestMessage);
       }
 
       setSubmitState(false);
-    });
-
-    dom.copyButton.addEventListener("click", async () => {
-      if (!latestMessage) {
-        return;
-      }
-
-      const bundle = copy[currentLanguage];
-      const copied = await copyMessage(latestMessage);
-      showStatus(bundle.statusTitle, copied ? bundle.copied : bundle.copiedFallback, latestMessage);
-    });
-
-    if (dom.popupOpen) {
-      dom.popupOpen.addEventListener("click", () => {
-        hideRedirectPopup();
-      });
-    }
-
-    if (dom.popupClose) {
-      dom.popupClose.addEventListener("click", () => {
-        hideRedirectPopup();
-      });
-    }
-
-    if (dom.popup) {
-      dom.popup.addEventListener("click", (event) => {
-        if (event.target === dom.popup) {
-          hideRedirectPopup();
-        }
-      });
-    }
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        hideRedirectPopup();
-      }
     });
 

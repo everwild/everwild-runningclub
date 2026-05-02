@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --ink: #f3ede5;
   --ink-soft: #d1c8bc;
   --sand: #06080d;
@@ -1564,20 +1564,15 @@ section > .shell {
         font-size: 16.25px;
       }
 
-      .site-header .shell,
-      .header-actions,
-      .nav-links {
-        gap: 0.8rem;
+      .hero-copy h1 .hero-line {
+        white-space: normal;
       }
 
-      .site-header .shell {
-        flex-wrap: wrap;
-      }
-
-      .nav-links {
-        order: 3;
-        width: 100%;
-        justify-content: space-between;
+      html[lang^="zh"] .hero-copy p {
+        display: block;
+        width: auto;
+        max-width: var(--hero-subtitle-mobile-max-width) !important;
+        white-space: normal;
       }
 
       .contact-icons {
@@ -1702,6 +1697,20 @@ section > .shell {
       .footer-links {
         grid-template-columns: 1fr;
         gap: 1.1rem;
+      }
+
+      .site-footer {
+        padding-bottom: max(2.8rem, calc(env(safe-area-inset-bottom, 0px) + 1rem));
+      }
+
+      .footer-bar .footer-link {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(255, 0, 100, 0.12);
+      }
+
+      .button {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(255, 0, 100, 0.12);
       }
     }
 

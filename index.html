@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Everwild Running Club is a Tokyo running crew built around structured sessions, pace groups, and long-term consistency.">
   <meta name="theme-color" content="#07090d">
   <title>EVERWILD · Running Club</title>
@@ -24,6 +24,7 @@
 </head>
 <body>
   <header class="site-header">
+    <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
     <div class="shell">
       <a class="brand" href="#top" aria-label="Everwild Running Club">
         <div class="brand-mark">
@@ -36,7 +37,15 @@
         </div>
       </a>
 
-      <div class="header-actions">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="メニューを開く">
+        <span class="nav-toggle-box" aria-hidden="true">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </span>
+      </button>
+
+      <div class="header-actions" id="site-menu">
         <nav class="nav-links" aria-label="Primary navigation">
           <a href="#manifesto" data-i18n="navManifesto">关于我们</a>
           <a href="#schedule" data-i18n="navSchedule">常规活动</a>
@@ -271,7 +280,7 @@
             <span class="section-kicker" data-i18n="pacersKicker">配速团队</span>
             <h2 data-i18n-html="pacersTitle">把节奏带出来<br>把队伍带起来</h2>
           </div>
-          <p data-i18n="pacersBody">在 ERC，pacer 的意义不是站在最前面拍照，而是把节奏、分组、安全感和活动体验真的组织起来。当前这版先用角色型介绍，之后你给我真实姓名、照片和配速能力，我就能替换成正式人物页。</p>
+          <p data-i18n="pacersBody">在 ERC，pacer 不是站在最前面的人，而是负责把节奏、分组、安全感和整体体验组织起来的人。不同活动会由不同角色带队，让新手和有目标的跑者都能找到合适的位置。</p>
         </div>
 
         <div class="pacer-grid">
@@ -451,6 +460,7 @@
   </footer>
 
   <script src="./assets/js/shared/site-i18n.js"></script>
+  <script src="./assets/js/shared/site-nav.js"></script>
   <script src="./assets/js/pages/home.js"></script>
 </body>
 </html>

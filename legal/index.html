@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="EVERWILD の運営主体、連絡先、ブランド使用に関する基本情報をまとめた法務情報ページです。">
   <meta name="theme-color" content="#07090d">
   <title>EVERWILD · 法務情報</title>
@@ -24,6 +24,7 @@
 </head>
 <body>
   <header class="site-header">
+    <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
     <div class="shell">
       <a class="brand" href="../index.html">
         <span class="brand-mark" aria-hidden="true">
@@ -36,7 +37,15 @@
         </span>
       </a>
 
-      <div class="header-actions">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="メニューを開く">
+        <span class="nav-toggle-box" aria-hidden="true">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </span>
+      </button>
+
+      <div class="header-actions" id="site-menu">
         <nav class="nav-links" aria-label="Primary">
           <a class="nav-link" href="../index.html#manifesto" data-i18n="navManifesto">关于我们</a>
           <a class="nav-link" href="../index.html#schedule" data-i18n="navSchedule">常规活动</a>
@@ -126,6 +135,7 @@
   </footer>
 
   <script src="../assets/js/shared/site-i18n.js"></script>
+  <script src="../assets/js/shared/site-nav.js"></script>
   <script src="../assets/js/pages/legal.js"></script>
 </body>
 </html>
