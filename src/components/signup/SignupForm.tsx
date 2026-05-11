@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import type { Lang } from "@/lib/lang";
 import { FORMSPREE_ENDPOINT } from "@/lib/site";
-import type { SignupMessages } from "@/messages/signupCopy";
 import { signupCopy } from "@/messages/signupCopy";
 import { signupValueLabels } from "@/messages/signupValueLabels";
 
@@ -21,15 +19,38 @@ export function SignupForm({ lang }: { lang: Lang }) {
   const labels = signupValueLabels[lang];
   const [pacePh, setPacePh] = useState(bundle.pacePlaceholder);
   const [notesPh, setNotesPh] = useState(bundle.notesPlaceholder);
-  const [status, setStatus] = useState<{ title: string; body: string; message: string } | null>(null);
+  const [toast, setToast] = useState<{ title: string; body: string; tone: "success" | "error" } | null>(null);
+  const [fieldError, setFieldError] = useState<{ sessions: boolean; consent: boolean }>({
+    sessions: false,
+    consent: false
+  });
   const [submitting, setSubmitting] = useState(false);
+  const toastTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     setPacePh(bundle.pacePlaceholder);
     setNotesPh(bundle.notesPlaceholder);
   }, [bundle.pacePlaceholder, bundle.notesPlaceholder]);
 
-  const homeHref = `/${lang}/`;
+  const showToast = useCallback((next: { title: string; body: string; tone: "success" | "error" }) => {
+    setToast(next);
+    if (toastTimerRef.current !== null) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2000);
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (toastTimerRef.current !== null) {
+        window.clearTimeout(toastTimerRef.current);
+      }
+    },
+    []
+  );
 
   const buildMessage = (form: HTMLFormElement) => {
     const sessions = getCheckedValues(form, "sessions");
@@ -118,13 +139,16 @@ export function SignupForm({ lang }: { lang: Lang }) {
     const sessions = getCheckedValues(form, "sessions");
     const goals = getCheckedValues(form, "goals");
     const consent = form.querySelector<HTMLInputElement>("#consent")?.checked;
+    setFieldError({ sessions: false, consent: false });
 
     if (!sessions.length) {
-      setStatus({ title: bundle.validationTitle, body: bundle.errorSessions, message: "" });
+      setFieldError((prev) => ({ ...prev, sessions: true }));
+      showToast({ title: bundle.validationTitle, body: bundle.errorSessions, tone: "error" });
       return;
     }
     if (!consent) {
-      setStatus({ title: bundle.validationTitle, body: bundle.errorConsent, message: "" });
+      setFieldError((prev) => ({ ...prev, consent: true }));
+      showToast({ title: bundle.validationTitle, body: bundle.errorConsent, tone: "error" });
       return;
     }
 
@@ -137,14 +161,12 @@ export function SignupForm({ lang }: { lang: Lang }) {
       ok = false;
     }
     if (ok) {
-      setStatus({ title: bundle.successTitle, body: bundle.successBody, message: "" });
+      showToast({ title: bundle.successTitle, body: bundle.successBody, tone: "success" });
     } else {
-      setStatus({ title: bundle.formspreeFailTitle, body: bundle.formspreeWarning, message });
+      showToast({ title: bundle.formspreeFailTitle, body: bundle.formspreeWarning, tone: "error" });
     }
     setSubmitting(false);
   };
-
-  const hasMessage = Boolean(status?.message);
 
   return (
     <>
@@ -189,7 +211,7 @@ export function SignupForm({ lang }: { lang: Lang }) {
           <input id="pace" name="pace" type="text" placeholder={pacePh} />
           <span className="field-hint">{bundle.paceHint}</span>
         </div>
-        <div className="choice-group">
+        <div className={`choice-group${fieldError.sessions ? " has-error" : ""}`}>
           <div className="choice-title is-required">{bundle.labelSessions}</div>
           <div className="choice-grid">
             <label className="choice">
@@ -213,6 +235,7 @@ export function SignupForm({ lang }: { lang: Lang }) {
               <span>{bundle.sessionSatNew}</span>
             </label>
           </div>
+          {fieldError.sessions ? <p className="field-inline-error">{bundle.errorSessions}</p> : null}
         </div>
         <div className="choice-group">
           <div className="choice-title">{bundle.labelGoals}</div>
@@ -240,42 +263,23 @@ export function SignupForm({ lang }: { lang: Lang }) {
           <textarea id="notes" name="notes" placeholder={notesPh} />
           <span className="field-hint">{bundle.notesHint}</span>
         </div>
-        <label className="consent">
+        <label className={`consent${fieldError.consent ? " has-error" : ""}`}>
           <input id="consent" name="consent" type="checkbox" required />
           <span className="is-required">{bundle.consentText}</span>
         </label>
+        {fieldError.consent ? <p className="field-inline-error">{bundle.errorConsent}</p> : null}
         <button className="button button-primary" type="submit" disabled={submitting}>
           {bundle.submitLabel}
         </button>
       </form>
-
-      <section
-        id="status"
-        className={`status${status ? " is-visible" : ""}`}
-        aria-live="polite"
-        hidden={!status}
-      >
-        {status ? (
-          <>
-            <strong id="status-title">{status.title}</strong>
-            <p id="status-copy">{status.body}</p>
-            <textarea
-              id="output"
-              className="output-box"
-              readOnly
-              aria-label="Signup summary"
-              value={status.message}
-              hidden={!hasMessage}
-              style={{ display: hasMessage ? "block" : "none" }}
-            />
-            <div className="helper-row">
-              <Link className="button button-primary" href={homeHref}>
-                {bundle.statusHome}
-              </Link>
-            </div>
-          </>
-        ) : null}
-      </section>
+      {toast ? (
+        <div className="submit-toast-layer" aria-live="polite" aria-atomic="true">
+          <section className={`submit-toast submit-toast--${toast.tone}`} role="status">
+            <strong>{toast.title}</strong>
+            <p>{toast.body}</p>
+          </section>
+        </div>
+      ) : null}
     </>
   );
 }

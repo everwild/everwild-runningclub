@@ -14,9 +14,9 @@
   --header-shell-gap: 1rem;
   --header-shell-padding-y: 0.36rem;
   --header-shell-padding-x: 0.92rem;
-  --header-shell-background: rgba(30, 36, 46, 0.18);
-  --header-shell-backdrop: blur(24px) saturate(145%);
-  --header-shell-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+  --header-shell-background: rgba(20, 26, 36, 0.14);
+  --header-shell-backdrop: blur(16px) saturate(128%);
+  --header-shell-shadow: 0 12px 24px rgba(0, 0, 0, 0.07);
   --header-brand-offset: 0.48rem;
   --header-brand-gap: 0.98rem;
   --header-brand-mark-offset: 0.18rem;
@@ -32,6 +32,8 @@
   --header-lang-shell-padding: 0.2rem;
   --header-lang-button-padding-y: 0.46rem;
   --header-lang-button-padding-x: 0.84rem;
+  --motion-fast: 180ms;
+  --motion-base: 260ms;
   --font-latin: "Segoe UI Variable", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-zh: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", "Source Han Sans SC", "Hiragino Sans GB", "Segoe UI", sans-serif;
   --font-ja: "Noto Sans JP", "Meiryo", "Yu Gothic UI", "Yu Gothic", "Hiragino Sans", "Segoe UI", sans-serif;
@@ -283,7 +285,7 @@ textarea {
   line-height: 1;
   letter-spacing: var(--header-link-letter-spacing);
   text-transform: none;
-  transition: color 180ms ease;
+  transition: color var(--motion-fast) ease;
 }
 
 .nav-links a:not(.nav-signup):hover,
@@ -307,9 +309,9 @@ textarea {
   color: var(--white) !important;
   box-shadow: 0 12px 24px rgba(255, 0, 100, 0.18);
   transition:
-    color 240ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    color var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1),
+    border-color var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nav-signup::before,
@@ -325,14 +327,14 @@ textarea {
   z-index: -2;
   background: linear-gradient(135deg, var(--brand-hot), var(--brand-shift));
   opacity: 1;
-  transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nav-signup::after {
   z-index: -1;
   background: linear-gradient(135deg, rgba(255, 0, 100, 0.16), rgba(160, 80, 160, 0.12));
   opacity: 0;
-  transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nav-signup:hover,
@@ -385,7 +387,7 @@ textarea {
   cursor: pointer;
   color: rgba(255, 255, 255, 0.74);
   background: transparent;
-  transition: color 180ms ease;
+  transition: color var(--motion-fast) ease;
   font-size: var(--header-link-font-size);
   line-height: 1;
   font-weight: 700;
@@ -429,13 +431,21 @@ textarea {
   flex-shrink: 0;
   touch-action: manipulation;
   -webkit-tap-highlight-color: rgba(255, 0, 100, 0.12);
-  transition: background 0.2s ease;
+  transition: background var(--motion-fast) ease;
 }
 
 .nav-toggle:hover,
 .nav-toggle:focus-visible {
   background: rgba(255, 255, 255, 0.12);
   outline: none;
+}
+
+.nav-links a:focus-visible,
+.lang-toggle button:focus-visible,
+.brand:focus-visible {
+  outline: 2px solid rgba(255, 0, 100, 0.75);
+  outline-offset: 2px;
+  border-radius: 0.45rem;
 }
 
 .nav-toggle-box {

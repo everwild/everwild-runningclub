@@ -7,6 +7,8 @@
   --surface: rgba(15, 20, 27, 0.9);
   --surface-strong: rgba(19, 26, 36, 0.96);
   --shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+  --motion-fast: 180ms;
+  --motion-base: 240ms;
 }
 
 html {
@@ -59,11 +61,21 @@ body::before {
       letter-spacing: 0.05em;
       text-transform: none;
       cursor: pointer;
-      transition: transform 180ms ease;
+      transition:
+        transform var(--motion-fast) ease,
+        box-shadow var(--motion-fast) ease,
+        border-color var(--motion-fast) ease,
+        filter var(--motion-fast) ease;
     }
 
-    .button:hover {
+    .button:hover,
+    .button:focus-visible {
       transform: translateY(-2px);
+    }
+
+    .button:active {
+      transform: translateY(0);
+      filter: brightness(0.96);
     }
 
     .button:disabled {
@@ -77,6 +89,11 @@ body::before {
       background: linear-gradient(135deg, var(--brand-hot), var(--brand-shift));
       color: var(--white);
       box-shadow: 0 16px 34px rgba(255, 0, 100, 0.22);
+    }
+
+    .button-primary:hover,
+    .button-primary:focus-visible {
+      box-shadow: 0 18px 36px rgba(255, 0, 100, 0.28);
     }
 
     .button-secondary {
@@ -155,6 +172,15 @@ body::before {
       padding: 0.9rem 1rem;
       background: rgba(255, 255, 255, 0.03);
       color: var(--ink);
+      transition: border-color var(--motion-fast) ease, box-shadow var(--motion-fast) ease;
+    }
+
+    .field input:focus-visible,
+    .field select:focus-visible,
+    .field textarea:focus-visible {
+      outline: none;
+      border-color: rgba(255, 0, 100, 0.62);
+      box-shadow: 0 0 0 3px rgba(255, 0, 100, 0.18);
     }
 
     .field select {
@@ -219,6 +245,7 @@ body::before {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--ink-soft);
+      transition: border-color var(--motion-fast) ease, background var(--motion-fast) ease;
     }
 
     .choice input {
@@ -230,6 +257,9 @@ body::before {
       display: inline-flex;
       align-items: flex-start;
       gap: 0.7rem;
+      padding: 0.42rem 0.55rem;
+      border: 1px solid transparent;
+      border-radius: 0.72rem;
       color: var(--muted);
       font-size: 1rem;
       line-height: 1.7;
@@ -240,32 +270,21 @@ body::before {
       accent-color: var(--brand-hot);
     }
 
-    .status {
-      display: none;
-      margin-top: 1.5rem;
-      padding: 1.2rem;
-      border-radius: var(--card-radius);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .choice-group.has-error .choice-title,
+    .consent.has-error span {
+      color: #ffd2de;
     }
 
-    .status.is-visible {
-      display: block;
+    .choice-group.has-error .choice,
+    .consent.has-error {
+      border-color: rgba(255, 0, 100, 0.42);
     }
 
-    .status strong {
-      display: block;
-      color: var(--ink);
-      font-size: 1rem;
-      margin-bottom: 0.45rem;
-    }
-
-    .status p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.7;
-      white-space: pre-line;
+    .field-inline-error {
+      margin: 0.25rem 0 0;
+      color: #ffb9cc;
+      font-size: 0.92rem;
+      line-height: 1.55;
     }
 
     .signup-honeypot {
@@ -278,25 +297,77 @@ body::before {
       pointer-events: none;
     }
 
-.output-box {
-  margin-top: 1rem;
-  width: 100%;
-  min-height: 11rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--card-radius);
+.submit-toast-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
   padding: 1rem;
-  resize: vertical;
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--ink);
-  font-size: 1rem;
 }
 
-    .helper-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 1rem;
-    }
+.submit-toast {
+  width: min(92vw, 28rem);
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(9, 12, 18, 0.92);
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.4);
+  padding: 1rem 1.05rem 1.05rem;
+  color: var(--ink);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  animation: submit-toast-pop 2000ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.submit-toast strong {
+  display: block;
+  font-size: 1.02rem;
+  color: var(--white);
+}
+
+.submit-toast p {
+  margin: 0.42rem 0 0;
+  color: #efe6db;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.submit-toast--success {
+  border-color: rgba(40, 199, 111, 0.42);
+}
+
+.submit-toast--error {
+  border-color: rgba(255, 0, 100, 0.42);
+}
+
+@keyframes submit-toast-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  12% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  82% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.99);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submit-toast {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
 
     @media (hover: hover) and (pointer: fine) {
       .form-panel:hover {
@@ -366,8 +437,7 @@ body::before {
         margin-top: 0.35rem;
       }
 
-      .button,
-      .helper-row .button {
+      .button {
         touch-action: manipulation;
         -webkit-tap-highlight-color: rgba(255, 0, 100, 0.12);
       }

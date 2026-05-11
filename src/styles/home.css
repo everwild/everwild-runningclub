@@ -5,7 +5,7 @@
   --paper: #090b11;
   --stone: #131820;
   --text: #ece7df;
-  --muted: #c9c2b8;
+  --muted: #d6cec3;
   --surface: rgba(15, 20, 27, 0.88);
   --surface-strong: rgba(19, 26, 36, 0.96);
   --surface-soft: rgba(255, 255, 255, 0.04);
@@ -28,6 +28,9 @@
   --hero-mobile-copy-min-height: min(80svh, 760px);
   --hero-mobile-copy-padding-top: 6.2rem;
   --hero-mobile-copy-padding-bottom: 2.8rem;
+  --section-space-y: clamp(3.05rem, 5vw, 4.25rem);
+  --motion-fast: 180ms;
+  --motion-base: 260ms;
 }
 
 body {
@@ -261,12 +264,22 @@ section > .shell {
       font-weight: var(--font-strong-weight);
       letter-spacing: 0.06em;
       text-transform: none;
-      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+      transition:
+        transform var(--motion-fast) ease,
+        box-shadow var(--motion-fast) ease,
+        border-color var(--motion-fast) ease,
+        background var(--motion-fast) ease,
+        filter var(--motion-fast) ease;
     }
 
     .button:hover,
     .button:focus-visible {
       transform: translateY(-2px);
+    }
+
+    .button:active {
+      transform: translateY(0);
+      filter: brightness(0.96);
     }
 
     .button-primary {
@@ -283,7 +296,7 @@ section > .shell {
 
     section {
       position: relative;
-      padding: 3.15rem 0 4.2rem;
+      padding: var(--section-space-y) 0 calc(var(--section-space-y) + 1rem);
       scroll-margin-top: var(--section-scroll-offset);
     }
 
@@ -345,7 +358,7 @@ section > .shell {
     .section-intro p {
       margin: 0;
       font-size: clamp(1.14rem, 1.18vw, 1.28rem);
-      line-height: 1.95;
+      line-height: 1.82;
       color: var(--muted);
     }
 
