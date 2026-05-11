@@ -34,11 +34,11 @@ body::before {
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.06));
   pointer-events: none;
 }
-    .hero {
-      padding: 2.2rem 0 4rem;
+    .signup-hero {
+      padding: 4.1rem 0 4rem;
     }
 
-    .hero-grid {
+    .signup-hero-grid {
       width: var(--content-width);
       margin: 0 auto;
       display: grid;
@@ -88,13 +88,13 @@ body::before {
     .form-panel {
       scroll-margin-top: 7.4rem;
       width: 100%;
-      padding: 2rem;
-      border-radius: var(--card-radius);
-      background: var(--surface);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-      transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      transition: none;
     }
 
     .form-head h1 {
@@ -300,8 +300,8 @@ body::before {
 
     @media (hover: hover) and (pointer: fine) {
       .form-panel:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 34px 90px rgba(0, 0, 0, 0.3);
+        transform: none;
+        box-shadow: none;
       }
     }
 
@@ -333,15 +333,19 @@ body::before {
         scroll-padding-top: max(8.5rem, calc(env(safe-area-inset-top, 0px) + 6.5rem));
       }
 
-      .hero {
-        padding-top: max(2rem, env(safe-area-inset-top, 0px));
+      .signup-hero {
+        padding-top: max(3.2rem, env(safe-area-inset-top, 0px));
         padding-bottom: max(3rem, calc(env(safe-area-inset-bottom, 0px) + 2rem));
       }
 
+      .signup-hero-grid {
+        gap: 1.4rem;
+      }
+
       .form-panel {
-        padding: 1.4rem;
-        padding-bottom: max(1.4rem, calc(env(safe-area-inset-bottom, 0px) + 1rem));
-        border-radius: var(--card-radius);
+        padding: 0;
+        padding-bottom: max(0.2rem, env(safe-area-inset-bottom, 0px));
+        border-radius: 0;
       }
 
       .choice {
@@ -372,9 +376,55 @@ body::before {
       .field select,
       .field textarea {
         font-size: 1rem;
+        min-height: 2.9rem;
+      }
+
+      .field textarea {
+        min-height: 8.8rem;
       }
 
       .choice-grid {
         display: grid;
+        gap: 0.75rem;
+      }
+
+      .form-head p {
+        font-size: 1.06rem;
+        line-height: 1.78;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .signup-hero {
+        padding-top: max(2.7rem, env(safe-area-inset-top, 0px));
+      }
+
+      .form-head h1 {
+        font-size: clamp(1.88rem, 8.2vw, 2.32rem);
+      }
+
+      .form-head p {
+        font-size: 0.98rem;
+        line-height: 1.7;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        min-height: 2.7rem;
+        padding: 0.82rem 0.9rem;
+      }
+
+      .field textarea {
+        min-height: 8rem;
+      }
+
+      .choice {
+        min-height: 2.6rem;
+        padding: 0.7rem 0.82rem;
+      }
+
+      .button {
+        min-height: 2.95rem;
       }
     }

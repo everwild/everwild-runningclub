@@ -1,27 +1,19 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import type { Lang } from "@/lib/lang";
-import { htmlLangForUiLang } from "@/lib/lang";
 
 export function LangEffects({ lang }: { lang: Lang }) {
-  useEffect(() => {
-    document.documentElement.lang = htmlLangForUiLang(lang);
-  }, [lang]);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const uaData = (navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData;
-    const platform = uaData?.platform || navigator.platform || "";
-    const userAgent = navigator.userAgent || "";
-    const isApple =
-      /Mac|iPhone|iPad|iPod/i.test(platform) ||
-      /Macintosh|Mac OS X|iPhone|iPad|iPod/i.test(userAgent);
-    if (isApple) {
-      document.documentElement.dataset.platform = "apple";
-    } else {
-      delete document.documentElement.dataset.platform;
-    }
-  }, []);
+    void lang;
+    // Defensive cleanup for route transitions:
+    // ensures no stale mobile-menu state can lock page scrolling.
+    document.body.classList.remove("nav-open");
+    document.body.style.overflow = "";
+  }, [pathname, lang]);
 
   return null;
 }

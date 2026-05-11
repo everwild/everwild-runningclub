@@ -44,8 +44,8 @@ export default async function SignupPage({ params }: { params: Promise<{ lang: s
   return (
     <>
       <SiteHeader lang={lang} labels={t} />
-      <main className="hero" id="top">
-        <div className="hero-grid">
+      <main className="signup-hero" id="top">
+        <div className="signup-hero-grid">
           <section className="form-panel" id="signup">
             <div className="form-head">
               <h1>{t.formTitle}</h1>

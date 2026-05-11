@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   title: {
     default: "EVERWILD · Running Club",
-    template: "%s · EVERWILD"
+    template: "%s"
   },
   icons: {
     icon: [
@@ -36,8 +36,30 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const earlyHtmlAttrsScript = `
+    (function () {
+      try {
+        var p = (window.location && window.location.pathname) || "/";
+        var m = p.match(/^\\/(ja|en|zh)(?:\\/|$)/i);
+        var lang = m ? m[1].toLowerCase() : "ja";
+        document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+        var platform = (navigator.platform || "");
+        var ua = (navigator.userAgent || "");
+        var isApple = /Mac|iPhone|iPad|iPod/i.test(platform) || /Macintosh|Mac OS X|iPhone|iPad|iPod/i.test(ua);
+        if (isApple) {
+          document.documentElement.dataset.platform = "apple";
+        } else {
+          delete document.documentElement.dataset.platform;
+        }
+      } catch (e) {}
+    })();
+  `;
+
   return (
     <html lang="ja" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: earlyHtmlAttrsScript }} />
+      </head>
       <body>{children}</body>
     </html>
   );

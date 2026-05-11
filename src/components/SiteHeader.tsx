@@ -59,6 +59,12 @@ export function SiteHeader({
     return () => document.removeEventListener("keydown", onKey);
   }, [open, close]);
 
+  useEffect(() => {
+    setOpen(false);
+    document.body.classList.remove("nav-open");
+    document.body.style.overflow = "";
+  }, [pathname]);
+
   const langHref = (target: Lang) => {
     const segs = pathname.split("/").filter(Boolean);
     if (segs.length === 0) {
