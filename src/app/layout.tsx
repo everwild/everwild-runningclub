@@ -14,8 +14,20 @@ export const metadata: Metadata = {
     template: "%s · EVERWILD"
   },
   icons: {
-    icon: "/assets/images/logo/favicon.png",
-    apple: "/assets/images/logo/favicon.png"
+    icon: [
+      {
+        url: "/assets/images/logo/favicon.png",
+        type: "image/png",
+        sizes: "512x512"
+      }
+    ],
+    shortcut: ["/assets/images/logo/favicon.png"],
+    apple: [
+      {
+        url: "/assets/images/logo/favicon.png",
+        sizes: "512x512"
+      }
+    ]
   }
 };
 
