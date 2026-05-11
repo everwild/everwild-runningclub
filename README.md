@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Everwild Running Club — Next.js site
 
-## Getting Started
+Static Next.js 16 + Tailwind 4 migration of the brand site, built for **GitHub Pages** (`output: "export"`). Content and styling are aligned with the legacy `everwild-runningclub` static site: shared `site-core.css` / page CSS live under `src/styles/`, images under `public/assets/`.
 
-First, run the development server:
+## Routes
+
+- `/` → redirects to `/ja/`
+- `/{lang}/` — home (`ja` | `en` | `zh`)
+- `/{lang}/signup/` — Formspree signup form
+- `/{lang}/legal/`, `/{lang}/privacy/`, `/{lang}/terms/`
+
+Canonical / SEO base: `https://www.everwild-runningclub.com` (see `src/lib/site.ts`). Update if the production host changes.
+
+## Scripts
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev    # local dev
+npm run build  # static export → out/
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Preview the static bundle: `npx serve out` (or any static server).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.example` to `.env.local` if you need to override Formspree:
 
-## Learn More
+- `NEXT_PUBLIC_FORMSPREE_ENDPOINT` — defaults to the same endpoint as the legacy site.
 
-To learn more about Next.js, take a look at the following resources:
+## GitHub Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Repo **Settings → Pages**: source **GitHub Actions**.
+2. Workflow: `.github/workflows/deploy-gh-pages.yml` (build on push to `main`, deploy artifact `out/`).
+3. **Custom domain**: `public/CNAME` is set to `everwild-runningclub.com`; add the same in Pages settings and configure DNS per GitHub docs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Regenerating copy from legacy JS
 
-## Deploy on Vercel
+If the static site’s `home.js` / `signup.js` / legal scripts change, you can refresh extracted dictionaries:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+node scripts/extract-home-copy.mjs
+node scripts/extract-signup-copy.mjs
+node scripts/extract-signup-labels.mjs
+node scripts/extract-legal-page.mjs
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+(Paths assume this repo sits next to `everwild-runningclub` as on disk.)
+
+## Relation to `everwild-runningclub`
+
+The original static project remains the reference for pixel-level checks. After DNS points at this export, you can archive or retire the old deployment path.
