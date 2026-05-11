@@ -30,7 +30,6 @@
     toggle.setAttribute("aria-expanded", String(open));
     toggle.setAttribute("aria-label", open ? labels.close : labels.open);
     document.body.classList.toggle("nav-open", open);
-    document.body.style.overflow = open ? "hidden" : "";
     if (backdrop) {
       backdrop.setAttribute("aria-hidden", String(!open));
       backdrop.classList.toggle("nav-backdrop--open", open);

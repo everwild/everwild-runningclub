@@ -217,6 +217,10 @@ main {
 }
 
 @media (max-width: 760px) {
+  :root {
+    --header-offset: 5.55rem;
+  }
+
   .legal-hero {
     padding-top: calc(var(--header-offset) + 1.1rem);
     padding-bottom: 2rem;

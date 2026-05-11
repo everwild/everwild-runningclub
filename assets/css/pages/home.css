@@ -1557,7 +1557,21 @@ section > .shell {
 
     @media (max-width: 760px) {
       :root {
-        --section-scroll-offset: 8.9rem;
+        --section-scroll-offset: 7.15rem;
+        --hero-header-overlap: clamp(4.35rem, 11vw, 5.5rem);
+        --hero-mobile-padding-top: 2.35rem;
+        --hero-mobile-copy-padding-top: 5.35rem;
+      }
+
+      .hero-media {
+        top: clamp(3.45rem, 10vw, 4.65rem);
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .hero::before {
+        top: clamp(3.45rem, 10vw, 4.65rem);
       }
 
       html {
