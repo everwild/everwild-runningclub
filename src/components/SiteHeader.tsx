@@ -14,7 +14,7 @@ const headerGlassBlur: CSSProperties = {
   WebkitBackdropFilter: HEADER_GLASS_BACKDROP
 };
 
-/** Full-screen scrim: dim only — blur stays on the menu panel (`.header-actions-glass`). */
+/** Full-screen scrim: dim only — blur stays on the menu panel (`.header-actions-panel`). */
 const navBackdropScrim: CSSProperties = {
   backgroundColor: "rgba(4, 6, 10, 0.52)"
 };
@@ -64,17 +64,6 @@ export function SiteHeader({
     if (!open) {
       return;
     }
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         close();
@@ -87,7 +76,6 @@ export function SiteHeader({
   useEffect(() => {
     setOpen(false);
     document.body.classList.remove("nav-open");
-    document.body.style.overflow = "";
   }, [pathname]);
 
   const langHref = (target: Lang) => {
@@ -150,8 +138,7 @@ export function SiteHeader({
         </div>
 
         <div className="header-actions" id="site-menu">
-          <div className="header-actions-glass" aria-hidden style={headerGlassBlur} />
-          <div className="header-actions-body">
+          <div className="header-actions-panel" style={headerGlassBlur}>
             <nav className="nav-links" aria-label="Primary navigation">
               <Link href={`${home}#manifesto`} onClick={close}>
                 {labels.navManifesto}

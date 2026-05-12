@@ -14,7 +14,7 @@
   --header-shell-gap: 1rem;
   --header-shell-padding-y: 0.36rem;
   --header-shell-padding-x: 0.92rem;
-  /* Tint + tokens aligned with SiteHeader `HEADER_GLASS_BACKDROP` (shell-glass / header-actions-glass inline blur) */
+  /* Tint + tokens aligned with SiteHeader `HEADER_GLASS_BACKDROP` (shell-glass / header-actions-panel inline blur) */
   --header-shell-background: rgba(20, 26, 36, 0.08);
   --header-shell-backdrop: blur(10px) saturate(105%);
   --header-shell-shadow: 0 8px 18px rgba(0, 0, 0, 0.048);
@@ -203,9 +203,9 @@ textarea {
   z-index: 1;
 }
 
-/* Mobile menu panel glass — hidden on desktop (see min-width rules). */
-.header-actions-glass {
-  display: none;
+/* Menu panel wrapper: desktop uses display:contents so nav/lang stay in the shell flex row */
+.header-actions-panel {
+  display: contents;
 }
 
 /* Desktop: single row (brand + toggle + actions); mobile overrides to column + dropdown */
@@ -303,10 +303,6 @@ html[lang^="zh-"] .brand-copy span {
   gap: var(--header-shell-gap);
   min-width: 0;
   margin-left: auto;
-}
-
-.header-actions-body {
-  display: contents;
 }
 
 .nav-links {
@@ -532,9 +528,6 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     display: none !important;
   }
 
-  .header-actions-glass {
-    display: none !important;
-  }
 }
 
 @media (min-width: 1280px) {
@@ -566,6 +559,9 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
   :root {
     --header-top-gap: 0.65rem;
     --header-side-gap: 1rem;
+    /* Mobile drawer: opacity + slide only (no height stretch); frosted panel is one surface with inline blur */
+    --nav-drawer-duration: 400ms;
+    --nav-drawer-ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .nav-backdrop {
@@ -574,7 +570,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     inset: 0;
     z-index: 0;
     opacity: 0;
-    transition: opacity 160ms ease;
+    transition: opacity var(--nav-drawer-duration) var(--nav-drawer-ease);
     pointer-events: none;
     -webkit-tap-highlight-color: transparent;
   }
@@ -641,7 +637,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     height: 2.35rem;
   }
 
-  /* Panel blur from inline styles on .header-actions-glass */
+  /* Drawer motion on outer shell only; frosted card (.header-actions-panel) moves as one layer with inline blur */
   .header-actions {
     position: absolute;
     left: 0;
@@ -662,60 +658,47 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     overflow: visible;
     overscroll-behavior: contain;
     z-index: 5;
-    border-radius: var(--card-radius);
     border: 0;
     background: transparent;
     box-shadow: none;
-    transform: translateY(-5px);
-    /* Only opacity + transform — animating max-height/padding causes layout thrash + jank with backdrop-filter */
+    transform: translateY(-10px);
+    /* Closing: fade opacity + slide. Opening uses body.nav-open rule so opacity is instant — avoids backdrop-filter compositing one beat late. */
     transition:
-      opacity 140ms ease,
-      transform 165ms cubic-bezier(0.22, 1, 0.36, 1),
-      visibility 0ms linear 165ms;
+      opacity var(--nav-drawer-duration) var(--nav-drawer-ease),
+      transform var(--nav-drawer-duration) var(--nav-drawer-ease),
+      visibility 0ms linear var(--nav-drawer-duration);
   }
 
-  .header-actions-glass {
-    display: block;
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    z-index: 0;
-    pointer-events: none;
-    background: var(--header-shell-background);
-    box-shadow: var(--header-shell-shadow);
-  }
-
-  .header-actions-body {
-    position: relative;
-    z-index: 1;
+  .header-actions-panel {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
+    position: relative;
     width: 100%;
     max-width: min(22rem, 100%);
     margin-inline: auto;
-    max-height: 0;
-    overflow: hidden;
-    -webkit-overflow-scrolling: touch;
+    padding: 0.65rem 0 0.55rem;
+    border-radius: var(--card-radius);
+    box-shadow: var(--header-shell-shadow);
+    background: var(--header-shell-background);
+    overflow: visible;
+    isolation: isolate;
+    z-index: 0;
+    /* Promote compositing so backdrop-filter samples with the first open frame */
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   body.nav-open .header-actions {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    padding: 0.65rem 0 0.55rem;
     transform: translateY(0);
     transition:
-      opacity 155ms ease,
-      transform 175ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform var(--nav-drawer-duration) var(--nav-drawer-ease),
+      opacity 0ms linear 0ms,
       visibility 0ms linear 0ms;
-  }
-
-  body.nav-open .header-actions-body {
-    max-height: min(64vh, 480px);
-    overflow-x: hidden;
-    overflow-y: auto;
   }
 
   .nav-links {
@@ -746,7 +729,17 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     font-size: 0.86rem;
     line-height: 1.22;
     letter-spacing: 0.04em;
+  }
+
+  .nav-links a {
     width: 100%;
+  }
+
+  /* CTA slightly inset vs full-width nav rows */
+  .nav-links a.nav-signup {
+    width: calc(100% - 1.35rem);
+    max-width: calc(100% - 1.35rem);
+    margin-inline: auto;
   }
 
   .nav-links a:not(.nav-signup):hover,
@@ -799,13 +792,26 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .nav-backdrop {
-      transition: opacity 100ms linear;
+    :root {
+      --nav-drawer-duration: 120ms;
+      --nav-drawer-ease: linear;
     }
 
-    .header-actions,
+    .nav-backdrop {
+      transition: opacity var(--nav-drawer-duration) var(--nav-drawer-ease);
+    }
+
+    .header-actions {
+      transition:
+        opacity var(--nav-drawer-duration) var(--nav-drawer-ease),
+        visibility 0ms linear var(--nav-drawer-duration);
+      transform: none;
+    }
+
     body.nav-open .header-actions {
-      transition: opacity 100ms linear, visibility 0ms linear 100ms;
+      transition:
+        opacity 0ms linear 0ms,
+        visibility 0ms linear 0ms;
       transform: none;
     }
   }

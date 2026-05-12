@@ -1568,8 +1568,8 @@ section > .shell {
         --section-scroll-offset: 7.15rem;
         /* No negative pull-up on mobile — hero image starts below sticky header */
         --hero-header-overlap: 0rem;
-        /* Title band: gap under image → heading */
-        --hero-mobile-stack-gap: clamp(0.85rem, 3.2vw, 1.2rem);
+        /* Title band: same padding above & below the copy block (title sits lower vs image) */
+        --hero-mobile-title-band-pad: clamp(1.45rem, 4vw, 2rem);
         /* Slightly more space under nav so the carousel sits a bit lower */
         --hero-mobile-padding-top: clamp(1.15rem, 4.2vw, 1.55rem);
       }
@@ -1638,7 +1638,7 @@ section > .shell {
         min-height: 0;
         height: auto;
         margin: 0;
-        padding: var(--hero-mobile-stack-gap) 1.15rem clamp(1.75rem, 5vw, 2.35rem);
+        padding: var(--hero-mobile-title-band-pad) 1.15rem var(--hero-mobile-title-band-pad);
         background: transparent;
         justify-content: flex-start;
         align-items: center;
@@ -1783,7 +1783,7 @@ section > .shell {
 
     @media (max-width: 430px) {
       :root {
-        --hero-mobile-stack-gap: clamp(0.75rem, 2.8vw, 1.05rem);
+        --hero-mobile-title-band-pad: clamp(1.25rem, 3.6vw, 1.75rem);
         --hero-mobile-padding-top: clamp(1rem, 3.8vw, 1.4rem);
       }
 
