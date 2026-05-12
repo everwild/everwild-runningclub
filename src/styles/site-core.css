@@ -634,7 +634,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
       transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
       clip-path 200ms cubic-bezier(0.22, 1, 0.36, 1),
       visibility 0ms linear 200ms;
-    contain: layout paint;
+    /* Do not use contain: paint — it breaks backdrop-filter “frosted glass” like the nav shell */
     -webkit-overflow-scrolling: touch;
   }
 

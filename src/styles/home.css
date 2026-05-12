@@ -1577,7 +1577,8 @@ section > .shell {
       :root {
         --section-scroll-offset: 7.15rem;
         --hero-header-overlap: clamp(2.4rem, 7vw, 3.4rem);
-        --hero-mobile-padding-top: 0.25rem;
+        /* Clear sticky header + safe area so hero image is not hidden under the bar */
+        --hero-mobile-padding-top: max(0.45rem, calc(env(safe-area-inset-top, 0px) + 4.45rem));
       }
 
       /* Stacked hero: image block only, then title band (not over the photo) */
@@ -1589,6 +1590,7 @@ section > .shell {
         height: auto;
         min-height: auto;
         max-height: none;
+        margin-top: 0;
         padding-top: var(--hero-mobile-padding-top);
       }
 
@@ -1788,7 +1790,7 @@ section > .shell {
 
     @media (max-width: 430px) {
       :root {
-        --hero-mobile-padding-top: 0.2rem;
+        --hero-mobile-padding-top: max(0.4rem, calc(env(safe-area-inset-top, 0px) + 4.2rem));
       }
 
       .hero-copy h1 {
