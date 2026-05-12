@@ -520,11 +520,13 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
   :root {
     --header-top-gap: 0.65rem;
     --header-side-gap: 1rem;
-    /* Explicit glass recipe (same tokens as desktop shell) for reuse on mobile dropdown */
-    --header-glass-bg: var(--header-shell-background);
-    --header-glass-blur: var(--header-shell-backdrop);
-    --header-glass-shadow: var(--header-shell-shadow);
-    --header-glass-radius: var(--header-shell-radius);
+    /*
+      Mobile: one opaque-ish frosted fill for shell + menu so they read the same
+      (shell alone at 0.14 often looks darker than the floating menu over the page).
+    */
+    --header-mobile-glass-fill: rgba(22, 28, 38, 0.34);
+    /* Rounded rect for dropdown — not 999px pill; radius ≈ visual corner of the nav row (~half bar height) */
+    --header-menu-panel-radius: clamp(0.78rem, 2.6vw, 1.08rem);
   }
 
   /* Tap-outside to close: no dimming (user request — page stays same brightness) */
@@ -546,7 +548,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     pointer-events: auto;
   }
 
-  /* Mobile shell + floating menu share one “capsule glass” language (not --card-radius) */
+  /* Mobile shell: keep pill/capsule; fill matches dropdown so opacity feels consistent */
   .site-header .shell {
     position: relative;
     z-index: 1;
@@ -560,11 +562,11 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     padding-bottom: 0.48rem;
     padding-left: 0.85rem;
     overflow: visible;
-    border-radius: var(--header-glass-radius);
-    background: var(--header-glass-bg);
-    backdrop-filter: var(--header-glass-blur);
-    -webkit-backdrop-filter: var(--header-glass-blur);
-    box-shadow: var(--header-glass-shadow);
+    border-radius: var(--header-shell-radius);
+    background: var(--header-mobile-glass-fill);
+    backdrop-filter: var(--header-shell-backdrop);
+    -webkit-backdrop-filter: var(--header-shell-backdrop);
+    box-shadow: var(--header-shell-shadow);
   }
 
   .shell-nav-row {
@@ -632,13 +634,13 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     overflow: hidden;
     overscroll-behavior: contain;
     z-index: 5;
-    border-radius: var(--header-glass-radius);
+    border-radius: var(--header-menu-panel-radius);
     border: 0;
-    background: var(--header-glass-bg);
+    background: var(--header-mobile-glass-fill);
     background-image: none;
-    backdrop-filter: var(--header-glass-blur);
-    -webkit-backdrop-filter: var(--header-glass-blur);
-    box-shadow: var(--header-glass-shadow);
+    backdrop-filter: var(--header-shell-backdrop);
+    -webkit-backdrop-filter: var(--header-shell-backdrop);
+    box-shadow: var(--header-shell-shadow);
     transform: translate3d(0, -6px, 0);
     transition:
       max-height 240ms cubic-bezier(0.22, 1, 0.36, 1),
