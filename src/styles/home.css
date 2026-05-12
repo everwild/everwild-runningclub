@@ -417,9 +417,7 @@ section > .shell {
     .manifesto-card {
       padding: 1.65rem;
       border-radius: var(--card-radius);
-      background:
-        radial-gradient(circle at 18% 18%, rgba(255, 0, 100, 0.12), transparent 26%),
-        linear-gradient(180deg, rgba(19, 24, 33, 0.96), rgba(12, 16, 23, 0.96));
+      background: linear-gradient(180deg, rgba(19, 24, 33, 0.96), rgba(12, 16, 23, 0.96));
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 18px 46px rgba(0, 0, 0, 0.2);
       transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
@@ -1305,26 +1303,18 @@ section > .shell {
     }
 
     .signup-actions .button-primary {
-      box-shadow:
-        0 10px 22px rgba(255, 0, 100, 0.14),
-        0 0 0.9rem rgba(255, 0, 100, 0.08);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
     }
 
+    /* No pink halo under the primary signup CTA */
     .signup-actions .button-primary::after {
-      background: radial-gradient(circle at center, rgba(255, 0, 100, 0.34), rgba(255, 0, 100, 0));
+      content: none;
+      display: none;
     }
 
     .signup-actions .button-primary:hover,
     .signup-actions .button-primary:focus-visible {
-      box-shadow:
-        0 14px 26px rgba(255, 0, 100, 0.16),
-        0 0 1.2rem rgba(255, 0, 100, 0.1);
-    }
-
-    .signup-actions .button-primary:hover::after,
-    .signup-actions .button-primary:focus-visible::after {
-      opacity: 1;
-      transform: translateY(0.1rem) scale(1);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
     }
 
     .site-footer {
@@ -1578,7 +1568,10 @@ section > .shell {
         --section-scroll-offset: 7.15rem;
         /* No negative pull-up on mobile — hero image starts below sticky header */
         --hero-header-overlap: 0rem;
-        --hero-mobile-padding-top: max(0.35rem, calc(env(safe-area-inset-top, 0px) + 4.55rem));
+        /* Title band: gap under image → heading */
+        --hero-mobile-stack-gap: clamp(0.85rem, 3.2vw, 1.2rem);
+        /* Slightly more space under nav so the carousel sits a bit lower */
+        --hero-mobile-padding-top: clamp(1.15rem, 4.2vw, 1.55rem);
       }
 
       /* Stacked hero: image block only, then title band (not over the photo) */
@@ -1645,8 +1638,8 @@ section > .shell {
         min-height: 0;
         height: auto;
         margin: 0;
-        padding: clamp(1.35rem, 4vw, 1.85rem) 1.15rem clamp(1.75rem, 5vw, 2.35rem);
-        background: var(--paper);
+        padding: var(--hero-mobile-stack-gap) 1.15rem clamp(1.75rem, 5vw, 2.35rem);
+        background: transparent;
         justify-content: flex-start;
         align-items: center;
         text-align: center;
@@ -1790,7 +1783,8 @@ section > .shell {
 
     @media (max-width: 430px) {
       :root {
-        --hero-mobile-padding-top: max(0.3rem, calc(env(safe-area-inset-top, 0px) + 4.2rem));
+        --hero-mobile-stack-gap: clamp(0.75rem, 2.8vw, 1.05rem);
+        --hero-mobile-padding-top: clamp(1rem, 3.8vw, 1.4rem);
       }
 
       .hero-copy h1 {

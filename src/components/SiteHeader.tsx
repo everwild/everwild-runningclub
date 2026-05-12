@@ -2,8 +2,22 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import type { Lang } from "@/lib/lang";
+
+/** One blur recipe for desktop shell + mobile drawer — must match `--header-shell-*` in `site-core.css`. */
+const HEADER_GLASS_BACKDROP = "blur(10px) saturate(105%)";
+
+/** Inline so Turbopack/LightningCSS cannot strip unprefixed `backdrop-filter` (needed for Firefox / reliable blur). */
+const headerGlassBlur: CSSProperties = {
+  backdropFilter: HEADER_GLASS_BACKDROP,
+  WebkitBackdropFilter: HEADER_GLASS_BACKDROP
+};
+
+/** Full-screen scrim: dim only — blur stays on the menu panel (`.header-actions-glass`). */
+const navBackdropScrim: CSSProperties = {
+  backgroundColor: "rgba(4, 6, 10, 0.52)"
+};
 
 export type SiteHeaderLabels = {
   brandLine: string;
@@ -93,8 +107,10 @@ export function SiteHeader({
         id="nav-backdrop"
         aria-hidden={!open}
         onClick={close}
+        style={navBackdropScrim}
       />
       <div className="shell">
+        <div className="shell-glass" aria-hidden style={headerGlassBlur} />
         <div className="shell-nav-row">
           <Link className="brand" href={`${home}#top`} aria-label="Everwild Running Club">
             <div className="brand-mark">
@@ -134,45 +150,48 @@ export function SiteHeader({
         </div>
 
         <div className="header-actions" id="site-menu">
-          <nav className="nav-links" aria-label="Primary navigation">
-            <Link href={`${home}#manifesto`} onClick={close}>
-              {labels.navManifesto}
-            </Link>
-            <Link href={`${home}#schedule`} onClick={close}>
-              {labels.navSchedule}
-            </Link>
-            <Link href={`${home}#routes`} onClick={close}>
-              {labels.navRoutes}
-            </Link>
-            <Link href={`${home}#pacers`} onClick={close}>
-              {labels.navPacers}
-            </Link>
-            <Link className="nav-social" href={`${home}#join`} onClick={close}>
-              {labels.navSocial}
-            </Link>
-            <Link href={`${home}#shop`} onClick={close}>
-              {labels.navBrands}
-            </Link>
-            <Link className="nav-signup" href={signupHref} onClick={close}>
-              {labels.navSignup}
-            </Link>
-          </nav>
+          <div className="header-actions-glass" aria-hidden style={headerGlassBlur} />
+          <div className="header-actions-body">
+            <nav className="nav-links" aria-label="Primary navigation">
+              <Link href={`${home}#manifesto`} onClick={close}>
+                {labels.navManifesto}
+              </Link>
+              <Link href={`${home}#schedule`} onClick={close}>
+                {labels.navSchedule}
+              </Link>
+              <Link href={`${home}#routes`} onClick={close}>
+                {labels.navRoutes}
+              </Link>
+              <Link href={`${home}#pacers`} onClick={close}>
+                {labels.navPacers}
+              </Link>
+              <Link className="nav-social" href={`${home}#join`} onClick={close}>
+                {labels.navSocial}
+              </Link>
+              <Link href={`${home}#shop`} onClick={close}>
+                {labels.navBrands}
+              </Link>
+              <Link className="nav-signup" href={signupHref} onClick={close}>
+                {labels.navSignup}
+              </Link>
+            </nav>
 
-          <div className="lang-toggle" aria-label="Language switcher">
-            {(["ja", "en", "zh"] as const).map((code) => (
-              <button
-                key={code}
-                type="button"
-                className={code === lang ? "is-active" : ""}
-                aria-pressed={code === lang ? "true" : "false"}
-                onClick={() => {
-                  router.push(langHref(code));
-                  close();
-                }}
-              >
-                {code === "ja" ? "JA" : code === "en" ? "EN" : "CN"}
-              </button>
-            ))}
+            <div className="lang-toggle" aria-label="Language switcher">
+              {(["ja", "en", "zh"] as const).map((code) => (
+                <button
+                  key={code}
+                  type="button"
+                  className={code === lang ? "is-active" : ""}
+                  aria-pressed={code === lang ? "true" : "false"}
+                  onClick={() => {
+                    router.push(langHref(code));
+                    close();
+                  }}
+                >
+                  {code === "ja" ? "JA" : code === "en" ? "EN" : "CN"}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
