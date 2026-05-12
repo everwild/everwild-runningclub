@@ -621,11 +621,12 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     overscroll-behavior: contain;
     z-index: 5;
     border-radius: var(--card-radius);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    /* Single flat panel — avoids gradient banding / “重复” stripes */
-    background-color: rgba(14, 17, 22, 0.96);
-    background-image: none;
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.38);
+    border: 0;
+    /* Match sticky nav “pill” glass (same tokens as .site-header .shell) */
+    background: var(--header-shell-background);
+    backdrop-filter: var(--header-shell-backdrop);
+    -webkit-backdrop-filter: var(--header-shell-backdrop);
+    box-shadow: var(--header-shell-shadow);
     transform: translateY(-6px);
     clip-path: inset(0 0 100% 0 round var(--card-radius));
     transition:

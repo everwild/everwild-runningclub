@@ -1576,23 +1576,83 @@ section > .shell {
     @media (max-width: 760px) {
       :root {
         --section-scroll-offset: 7.15rem;
-        /* Less negative pull-up so hero sits lower; more room under sticky header */
-        --hero-header-overlap: clamp(3.1rem, 8.5vw, 4.25rem);
-        --hero-mobile-padding-top: 0.35rem;
-        --hero-mobile-copy-min-height: min(56svh, 480px);
-        --hero-mobile-copy-padding-top: clamp(2.75rem, 11vw, 4.25rem);
-        --hero-mobile-copy-padding-bottom: 2.4rem;
+        --hero-header-overlap: clamp(2.4rem, 7vw, 3.4rem);
+        --hero-mobile-padding-top: 0.25rem;
+      }
+
+      /* Stacked hero: image block only, then title band (not over the photo) */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        overflow: visible;
+        height: auto;
+        min-height: auto;
+        max-height: none;
+        padding-top: var(--hero-mobile-padding-top);
       }
 
       .hero-media {
-        top: clamp(4.85rem, 13vw, 6.35rem);
+        position: relative;
+        top: 0;
         left: 0;
         right: 0;
-        bottom: 0;
+        bottom: auto;
+        flex: 0 0 auto;
+        width: 100%;
+        z-index: 0;
+      }
+
+      .hero-media-frame {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+      }
+
+      .hero-media-track {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
       }
 
       .hero::before {
-        top: clamp(4.85rem, 13vw, 6.35rem);
+        display: none;
+      }
+
+      .hero-grid {
+        order: 2;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        min-height: 0;
+        flex: 0 0 auto;
+        margin: 0;
+        justify-items: stretch;
+      }
+
+      .hero-copy {
+        order: 2;
+        width: 100%;
+        max-width: none;
+        min-height: 0;
+        height: auto;
+        margin: 0;
+        padding: clamp(1.35rem, 4vw, 1.85rem) 1.15rem clamp(1.75rem, 5vw, 2.35rem);
+        background: var(--paper);
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+      }
+
+      .hero-copy h1 {
+        transform: none;
+        font-size: clamp(2.4rem, 10vw, 3.4rem);
       }
 
       html {
@@ -1605,6 +1665,20 @@ section > .shell {
 
       html[lang^="zh"] .hero-copy p {
         display: block;
+        width: auto;
+        max-width: var(--hero-subtitle-mobile-max-width) !important;
+        white-space: normal;
+      }
+
+      html[lang^="en"] .hero-copy p {
+        width: auto;
+        max-width: var(--hero-subtitle-mobile-max-width);
+        white-space: normal;
+      }
+
+      html[lang^="ja"] .hero-copy p {
+        display: block;
+        align-self: auto;
         width: auto;
         max-width: var(--hero-subtitle-mobile-max-width) !important;
         white-space: normal;
@@ -1627,44 +1701,6 @@ section > .shell {
       .contact-divider,
       .brand-divider {
         display: none;
-      }
-
-      .hero {
-        height: auto;
-        min-height: auto;
-        max-height: none;
-        padding-top: var(--hero-mobile-padding-top);
-      }
-
-      html[lang^="en"] .hero-copy p {
-        width: auto;
-        max-width: var(--hero-subtitle-mobile-max-width);
-        white-space: normal;
-      }
-
-      html[lang^="ja"] .hero-copy p {
-        display: block;
-        align-self: auto;
-        width: auto;
-        max-width: var(--hero-subtitle-mobile-max-width) !important;
-        white-space: normal;
-      }
-
-      .hero-grid {
-        justify-items: stretch;
-      }
-
-      .hero-copy {
-        min-height: var(--hero-mobile-copy-min-height);
-        height: auto;
-        padding: var(--hero-mobile-copy-padding-top) 0 var(--hero-mobile-copy-padding-bottom);
-        align-items: center;
-        text-align: center;
-        justify-content: center;
-      }
-
-      .hero-copy h1 {
-        font-size: clamp(2.4rem, 10vw, 3.4rem);
       }
 
       html[lang^="en"] .section-title-lockup {
@@ -1752,9 +1788,7 @@ section > .shell {
 
     @media (max-width: 430px) {
       :root {
-        --hero-mobile-padding-top: 0.25rem;
-        --hero-mobile-copy-padding-top: clamp(2.35rem, 10vw, 3.65rem);
-        --hero-mobile-copy-min-height: min(52svh, 440px);
+        --hero-mobile-padding-top: 0.2rem;
       }
 
       .hero-copy h1 {
