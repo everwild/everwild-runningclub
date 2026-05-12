@@ -1834,3 +1834,18 @@ section > .shell {
         transform: none;
       }
     }
+
+/* Chinese (zh): avoid Latin-style wide tracking / uppercase on CJK */
+html:lang(zh) .section-kicker,
+html[lang^="zh-"] .section-kicker,
+html:lang(zh) .eyebrow,
+html[lang^="zh-"] .eyebrow {
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+html:lang(zh) .section-intro h2,
+html[lang^="zh-"] .section-intro h2 {
+  max-width: min(100%, 26ch);
+  line-height: 1.14;
+}

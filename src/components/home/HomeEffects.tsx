@@ -15,10 +15,17 @@ export function HomeEffects() {
       const images = Array.from(root.querySelectorAll<HTMLImageElement>(".hero-slide img"));
       const mobileQuery = window.matchMedia("(max-width: 760px)");
       let frameId: number | null = null;
+      /** Desktop only: after first successful height commit, never recalc from resize (per session). */
+      let desktopHeroHeightCommitted = false;
 
       const applyHeroRuntimeHeightOnce = () => {
         if (mobileQuery.matches) {
           document.documentElement.style.removeProperty("--hero-runtime-height");
+          desktopHeroHeightCommitted = false;
+          return;
+        }
+
+        if (desktopHeroHeightCommitted) {
           return;
         }
 
@@ -50,6 +57,7 @@ export function HomeEffects() {
         const runtimeHeight = Math.min(requiredHeight, imageBoundHeight);
 
         document.documentElement.style.setProperty("--hero-runtime-height", `${Math.round(runtimeHeight)}px`);
+        desktopHeroHeightCommitted = true;
       };
 
       const queueHeroRuntimeHeightOnce = () => {
@@ -63,8 +71,6 @@ export function HomeEffects() {
       };
 
       queueHeroRuntimeHeightOnce();
-      const onResize = () => queueHeroRuntimeHeightOnce();
-      window.addEventListener("resize", onResize);
       const onMq = () => queueHeroRuntimeHeightOnce();
       if (typeof mobileQuery.addEventListener === "function") {
         mobileQuery.addEventListener("change", onMq);
@@ -72,7 +78,6 @@ export function HomeEffects() {
         mobileQuery.addListener(onMq);
       }
       return () => {
-        window.removeEventListener("resize", onResize);
         if (typeof mobileQuery.removeEventListener === "function") {
           mobileQuery.removeEventListener("change", onMq);
         } else {

@@ -73,6 +73,15 @@ html[lang^="zh-"] {
   --ui-font: var(--font-zh);
   --heading-font: var(--font-zh);
   --body-font: var(--font-zh);
+  /* Nav / brand: CJK-first (avoid Segoe shaping Han oddly on Windows) */
+  --header-font: var(--font-zh);
+  /* Match Japanese tuning: CJK reads better slightly heavier than default 400/650 */
+  --font-body-weight: 450;
+  --font-heading-weight: 680;
+  --font-strong-weight: 720;
+  --header-link-weight: 720;
+  /* Latin-style wide tracking looks “散” on Chinese */
+  --header-link-letter-spacing: 0.04em;
 }
 
 html:lang(en),
@@ -105,6 +114,12 @@ html[data-platform="apple"][lang^="zh-"] {
   --ui-font: var(--font-zh-apple);
   --heading-font: var(--font-zh-apple);
   --body-font: var(--font-zh-apple);
+  --header-font: var(--font-zh-apple);
+  --font-body-weight: 455;
+  --font-heading-weight: 700;
+  --font-strong-weight: 740;
+  --header-link-weight: 730;
+  --header-link-letter-spacing: 0.035em;
 }
 
 html[data-platform="apple"]:lang(en),
@@ -223,7 +238,7 @@ textarea {
   line-height: 1;
   letter-spacing: 0.05em;
   text-transform: none;
-  font-weight: 700;
+  font-weight: var(--font-strong-weight);
   color: var(--white);
   transition: color 180ms ease;
 }
@@ -236,6 +251,12 @@ textarea {
   color: rgba(255, 255, 255, 0.66);
   white-space: nowrap;
   transition: color 180ms ease;
+}
+
+html:lang(zh) .brand-copy span,
+html[lang^="zh-"] .brand-copy span {
+  letter-spacing: 0.06em;
+  text-transform: none;
 }
 
 .brand:hover .brand-mark-default,
@@ -281,7 +302,7 @@ textarea {
   font-family: var(--header-font);
   color: rgba(255, 255, 255, 0.78);
   font-size: var(--header-link-font-size);
-  font-weight: 700;
+  font-weight: var(--header-link-weight);
   line-height: 1;
   letter-spacing: var(--header-link-letter-spacing);
   text-transform: none;
@@ -390,7 +411,7 @@ textarea {
   transition: color var(--motion-fast) ease;
   font-size: var(--header-link-font-size);
   line-height: 1;
-  font-weight: 700;
+  font-weight: var(--header-link-weight);
   letter-spacing: var(--header-link-letter-spacing);
 }
 

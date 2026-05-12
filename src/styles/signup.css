@@ -498,3 +498,12 @@ body::before {
         min-height: 2.95rem;
       }
     }
+
+/* Chinese (zh): form labels — tight tracking, no uppercase on CJK */
+html:lang(zh) .field label,
+html[lang^="zh-"] .field label,
+html:lang(zh) .choice-title,
+html[lang^="zh-"] .choice-title {
+  letter-spacing: 0.05em;
+  text-transform: none;
+}
