@@ -521,16 +521,16 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     --header-side-gap: 1rem;
   }
 
+  /* Tap-outside to close: no dimming (user request — page stays same brightness) */
   .nav-backdrop {
     display: block;
     position: fixed;
     inset: 0;
     z-index: 0;
-    /* Solid dim layer: avoids blur repaint jank + banding on some GPUs */
-    background: rgba(4, 6, 10, 0.72);
+    background: transparent;
     backdrop-filter: none;
     opacity: 0;
-    transition: opacity 160ms ease;
+    transition: opacity 120ms ease;
     pointer-events: none;
     -webkit-tap-highlight-color: transparent;
   }
@@ -552,6 +552,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     padding-right: 0.85rem;
     padding-bottom: 0.48rem;
     padding-left: 0.85rem;
+    overflow: visible;
   }
 
   .shell-nav-row {
@@ -611,43 +612,45 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     gap: 0;
     flex-shrink: 0;
     min-height: 0;
-    max-height: min(72vh, 520px);
-    padding: 0.65rem 0 0.55rem;
+    max-height: 0;
+    padding: 0;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     overscroll-behavior: contain;
     z-index: 5;
     border-radius: var(--card-radius);
     border: 0;
-    /* Match sticky nav “pill” glass (same tokens as .site-header .shell) */
+    /* Same glass tokens as .site-header .shell — avoid clip-path (breaks backdrop-filter in WebKit/Chromium) */
     background: var(--header-shell-background);
     backdrop-filter: var(--header-shell-backdrop);
     -webkit-backdrop-filter: var(--header-shell-backdrop);
     box-shadow: var(--header-shell-shadow);
     transform: translateY(-6px);
-    clip-path: inset(0 0 100% 0 round var(--card-radius));
     transition:
+      max-height 240ms cubic-bezier(0.22, 1, 0.36, 1),
       opacity 160ms ease,
       transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
-      clip-path 200ms cubic-bezier(0.22, 1, 0.36, 1),
-      visibility 0ms linear 200ms;
-    /* Do not use contain: paint — it breaks backdrop-filter “frosted glass” like the nav shell */
+      padding 200ms ease,
+      visibility 0ms linear 240ms;
     -webkit-overflow-scrolling: touch;
   }
 
   body.nav-open .header-actions {
+    max-height: min(72vh, 520px);
+    padding: 0.65rem 0 0.55rem;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     transform: translateY(0);
-    clip-path: inset(0 0 0 0 round var(--card-radius));
     transition:
+      max-height 260ms cubic-bezier(0.22, 1, 0.36, 1),
       opacity 180ms ease,
       transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
-      clip-path 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      padding 220ms ease,
       visibility 0ms linear 0ms;
   }
 
@@ -738,7 +741,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
 
     .header-actions,
     body.nav-open .header-actions {
-      transition: opacity 100ms linear, visibility 0ms linear 100ms;
+      transition: opacity 100ms linear, max-height 100ms linear, visibility 0ms linear 100ms;
       transform: none;
     }
   }
