@@ -1576,20 +1576,23 @@ section > .shell {
     @media (max-width: 760px) {
       :root {
         --section-scroll-offset: 7.15rem;
-        --hero-header-overlap: clamp(4.35rem, 11vw, 5.5rem);
-        --hero-mobile-padding-top: 2.35rem;
-        --hero-mobile-copy-padding-top: 5.35rem;
+        /* Less negative pull-up so hero sits lower; more room under sticky header */
+        --hero-header-overlap: clamp(3.1rem, 8.5vw, 4.25rem);
+        --hero-mobile-padding-top: 0.35rem;
+        --hero-mobile-copy-min-height: min(56svh, 480px);
+        --hero-mobile-copy-padding-top: clamp(2.75rem, 11vw, 4.25rem);
+        --hero-mobile-copy-padding-bottom: 2.4rem;
       }
 
       .hero-media {
-        top: clamp(3.45rem, 10vw, 4.65rem);
+        top: clamp(4.85rem, 13vw, 6.35rem);
         left: 0;
         right: 0;
         bottom: 0;
       }
 
       .hero::before {
-        top: clamp(3.45rem, 10vw, 4.65rem);
+        top: clamp(4.85rem, 13vw, 6.35rem);
       }
 
       html {
@@ -1657,6 +1660,7 @@ section > .shell {
         padding: var(--hero-mobile-copy-padding-top) 0 var(--hero-mobile-copy-padding-bottom);
         align-items: center;
         text-align: center;
+        justify-content: center;
       }
 
       .hero-copy h1 {
@@ -1748,8 +1752,9 @@ section > .shell {
 
     @media (max-width: 430px) {
       :root {
-        --hero-mobile-padding-top: 2rem;
-        --hero-mobile-copy-padding-top: 4.75rem;
+        --hero-mobile-padding-top: 0.25rem;
+        --hero-mobile-copy-padding-top: clamp(2.35rem, 10vw, 3.65rem);
+        --hero-mobile-copy-min-height: min(52svh, 440px);
       }
 
       .hero-copy h1 {

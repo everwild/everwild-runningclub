@@ -526,11 +526,13 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     position: fixed;
     inset: 0;
     z-index: 0;
-    background: rgba(4, 6, 10, 0.52);
-    backdrop-filter: blur(5px);
+    /* Solid dim layer: avoids blur repaint jank + banding on some GPUs */
+    background: rgba(4, 6, 10, 0.72);
+    backdrop-filter: none;
     opacity: 0;
-    transition: opacity 0.28s ease;
+    transition: opacity 160ms ease;
     pointer-events: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .nav-backdrop.nav-backdrop--open {
@@ -595,59 +597,68 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     height: 2.35rem;
   }
 
+  /* Float menu below header bar: does not push page content (no layout jump / scroll shift) */
   .header-actions {
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 0.35rem);
     width: 100%;
     margin: 0;
-    margin-left: 0;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     justify-content: flex-start;
     gap: 0;
     flex-shrink: 0;
     min-height: 0;
-    max-height: 0;
-    padding: 0;
+    max-height: min(72vh, 520px);
+    padding: 0.65rem 0 0.55rem;
     opacity: 0;
     visibility: hidden;
-    overflow: hidden;
-    border-top: 1px solid transparent;
-    background: transparent;
-    box-shadow: none;
-    transform: none;
-    transition:
-      max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.22s ease,
-      padding 0.22s ease,
-      visibility 0s linear 0.38s;
+    pointer-events: none;
+    overflow-x: hidden;
+    overflow-y: auto;
     overscroll-behavior: contain;
-    z-index: 2;
+    z-index: 5;
+    border-radius: var(--card-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Single flat panel — avoids gradient banding / “重复” stripes */
+    background-color: rgba(14, 17, 22, 0.96);
+    background-image: none;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.38);
+    transform: translateY(-6px);
+    clip-path: inset(0 0 100% 0 round var(--card-radius));
+    transition:
+      opacity 160ms ease,
+      transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+      clip-path 200ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0ms linear 200ms;
+    contain: layout paint;
+    -webkit-overflow-scrolling: touch;
   }
 
   body.nav-open .header-actions {
-    max-height: min(72vh, 520px);
     opacity: 1;
     visibility: visible;
-    padding: 0.65rem 0 0.55rem;
-    margin-top: 0.35rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-    border-top-color: rgba(255, 255, 255, 0.1);
-    background: linear-gradient(180deg, rgba(14, 17, 24, 0.44), rgba(10, 13, 18, 0.35));
+    pointer-events: auto;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0 round var(--card-radius));
     transition:
-      max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.22s ease,
-      padding 0.22s ease,
-      visibility 0s linear 0s;
+      opacity 180ms ease,
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      clip-path 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0ms linear 0ms;
   }
 
   .nav-links {
     position: static;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     flex-wrap: nowrap;
     gap: 0.28rem;
     width: 100%;
+    max-width: min(22rem, 100%);
+    margin-inline: auto;
     transform: none;
   }
 
@@ -656,6 +667,8 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     min-height: 2.7rem;
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     padding: 0.6rem 0.7rem;
     border-radius: var(--card-radius);
     box-sizing: border-box;
@@ -665,6 +678,7 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     font-size: 0.86rem;
     line-height: 1.22;
     letter-spacing: 0.04em;
+    width: 100%;
   }
 
   .nav-links a:not(.nav-signup):hover,
@@ -673,8 +687,6 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
   }
 
   .nav-signup {
-    justify-content: center;
-    width: 100%;
     margin-top: 0.15rem;
   }
 
@@ -688,6 +700,9 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     gap: 0.55rem 0.85rem;
     padding-top: 0.65rem;
     margin-top: 0.45rem;
+    margin-inline: auto;
+    width: 100%;
+    max-width: min(22rem, 100%);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
@@ -713,6 +728,18 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
   .nav-toggle {
     touch-action: manipulation;
     -webkit-tap-highlight-color: rgba(255, 0, 100, 0.12);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-backdrop {
+      transition: opacity 100ms linear;
+    }
+
+    .header-actions,
+    body.nav-open .header-actions {
+      transition: opacity 100ms linear, visibility 0ms linear 100ms;
+      transform: none;
+    }
   }
 }
 
