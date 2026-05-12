@@ -1576,9 +1576,9 @@ section > .shell {
     @media (max-width: 760px) {
       :root {
         --section-scroll-offset: 7.15rem;
-        --hero-header-overlap: clamp(2.4rem, 7vw, 3.4rem);
-        /* Equal gap: nav → image top, and image bottom → title band */
-        --hero-mobile-image-gutter: max(0.3rem, calc(env(safe-area-inset-top, 0px) + 3.05rem));
+        /* No negative pull-up on mobile — hero image starts below sticky header */
+        --hero-header-overlap: 0rem;
+        --hero-mobile-padding-top: max(0.35rem, calc(env(safe-area-inset-top, 0px) + 4.55rem));
       }
 
       /* Stacked hero: image block only, then title band (not over the photo) */
@@ -1591,7 +1591,7 @@ section > .shell {
         min-height: auto;
         max-height: none;
         margin-top: 0;
-        padding-top: var(--hero-mobile-image-gutter);
+        padding-top: var(--hero-mobile-padding-top);
       }
 
       .hero-media {
@@ -1603,7 +1603,6 @@ section > .shell {
         flex: 0 0 auto;
         width: 100%;
         z-index: 0;
-        margin-bottom: var(--hero-mobile-image-gutter);
       }
 
       .hero-media-frame {
@@ -1791,7 +1790,7 @@ section > .shell {
 
     @media (max-width: 430px) {
       :root {
-        --hero-mobile-image-gutter: max(0.28rem, calc(env(safe-area-inset-top, 0px) + 2.85rem));
+        --hero-mobile-padding-top: max(0.3rem, calc(env(safe-area-inset-top, 0px) + 4.2rem));
       }
 
       .hero-copy h1 {
