@@ -1,5 +1,3 @@
-import type { Lang } from "@/lib/lang";
-
 export const legalCopy = { ja: {
     pageTitle: "EVERWILD · 法務情報",
     brandLine: "Everwild Running Club",

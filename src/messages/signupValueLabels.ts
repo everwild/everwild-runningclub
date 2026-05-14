@@ -1,5 +1,3 @@
-import type { Lang } from "@/lib/lang";
-
 export const signupValueLabels = {
       ja: {
         language: { ja: "日本語", en: "English", zh: "中文", bi: "複数言語でも可" },

@@ -17,8 +17,6 @@ function looksLikeEmail(value: string) {
 export function SignupForm({ lang }: { lang: Lang }) {
   const bundle = signupCopy[lang];
   const labels = signupValueLabels[lang];
-  const [pacePh, setPacePh] = useState(bundle.pacePlaceholder);
-  const [notesPh, setNotesPh] = useState(bundle.notesPlaceholder);
   const [toast, setToast] = useState<{ title: string; body: string; tone: "success" | "error" } | null>(null);
   const [fieldError, setFieldError] = useState<{ sessions: boolean; consent: boolean }>({
     sessions: false,
@@ -26,11 +24,6 @@ export function SignupForm({ lang }: { lang: Lang }) {
   });
   const [submitting, setSubmitting] = useState(false);
   const toastTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    setPacePh(bundle.pacePlaceholder);
-    setNotesPh(bundle.notesPlaceholder);
-  }, [bundle.pacePlaceholder, bundle.notesPlaceholder]);
 
   const showToast = useCallback((next: { title: string; body: string; tone: "success" | "error" }) => {
     setToast(next);
@@ -208,7 +201,7 @@ export function SignupForm({ lang }: { lang: Lang }) {
         </div>
         <div className="field">
           <label htmlFor="pace">{bundle.labelPace}</label>
-          <input id="pace" name="pace" type="text" placeholder={pacePh} />
+          <input id="pace" name="pace" type="text" placeholder={bundle.pacePlaceholder} />
           <span className="field-hint">{bundle.paceHint}</span>
         </div>
         <div className={`choice-group${fieldError.sessions ? " has-error" : ""}`}>
@@ -260,7 +253,7 @@ export function SignupForm({ lang }: { lang: Lang }) {
         </div>
         <div className="field">
           <label htmlFor="notes">{bundle.labelNotes}</label>
-          <textarea id="notes" name="notes" placeholder={notesPh} />
+          <textarea id="notes" name="notes" placeholder={bundle.notesPlaceholder} />
           <span className="field-hint">{bundle.notesHint}</span>
         </div>
         <label className={`consent${fieldError.consent ? " has-error" : ""}`}>

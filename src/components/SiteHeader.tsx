@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
-import type { Lang } from "@/lib/lang";
+import { LANGS, type Lang } from "@/lib/lang";
 
 /** One blur recipe for desktop shell + mobile drawer — must match `--header-shell-*` in `site-core.css`. */
 const HEADER_GLASS_BACKDROP = "blur(10px) saturate(105%)";
@@ -74,8 +74,10 @@ export function SiteHeader({
   }, [open, close]);
 
   useEffect(() => {
-    setOpen(false);
-    document.body.classList.remove("nav-open");
+    const id = requestAnimationFrame(() => {
+      setOpen(false);
+    });
+    return () => cancelAnimationFrame(id);
   }, [pathname]);
 
   const langHref = (target: Lang) => {
@@ -164,7 +166,7 @@ export function SiteHeader({
             </nav>
 
             <div className="lang-toggle" aria-label="Language switcher">
-              {(["ja", "en", "zh"] as const).map((code) => (
+              {LANGS.map((code) => (
                 <button
                   key={code}
                   type="button"

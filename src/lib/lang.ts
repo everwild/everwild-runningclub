@@ -2,8 +2,6 @@ export const LANGS = ["ja", "en", "zh"] as const;
 
 export type Lang = (typeof LANGS)[number];
 
-export const DEFAULT_LANG: Lang = "ja";
-
 export function isLang(value: string): value is Lang {
   return (LANGS as readonly string[]).includes(value);
 }

@@ -51,7 +51,7 @@ export default async function SignupPage({ params }: { params: Promise<{ lang: s
               <h1>{t.formTitle}</h1>
               <p>{t.formBody}</p>
             </div>
-            <SignupForm lang={lang} />
+            <SignupForm key={lang} lang={lang} />
           </section>
         </div>
       </main>

@@ -1,5 +1,3 @@
-import type { Lang } from "@/lib/lang";
-
 export const termsCopy = { ja: {
     pageTitle: "EVERWILD · 利用規約",
     brandLine: "Everwild Running Club",

@@ -2,6 +2,10 @@
 
 import { useEffect } from "react";
 
+/** Survives `HomeEffects` unmount/remount (e.g. client-side locale switch on `/[lang]/`) so hero height is not re-measured when the viewport is unchanged. Cleared on mobile layout or viewport change vs cached size. */
+type HeroDesktopRuntimeCache = { px: string; vw: number; vh: number };
+let heroDesktopRuntimeCache: HeroDesktopRuntimeCache | null = null;
+
 export function HomeEffects() {
   useEffect(() => {
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -15,18 +19,31 @@ export function HomeEffects() {
       const images = Array.from(root.querySelectorAll<HTMLImageElement>(".hero-slide img"));
       const mobileQuery = window.matchMedia("(max-width: 760px)");
       let frameId: number | null = null;
-      /** Desktop only: after first successful height commit, never recalc from resize (per session). */
+      /** Desktop only: after first successful height commit in this mount, skip further work until mobile or remount. */
       let desktopHeroHeightCommitted = false;
 
       const applyHeroRuntimeHeightOnce = () => {
         if (mobileQuery.matches) {
           document.documentElement.style.removeProperty("--hero-runtime-height");
           desktopHeroHeightCommitted = false;
+          heroDesktopRuntimeCache = null;
           return;
         }
 
         if (desktopHeroHeightCommitted) {
           return;
+        }
+
+        const cache = heroDesktopRuntimeCache;
+        if (cache) {
+          const vw = window.innerWidth;
+          const vh = window.innerHeight;
+          if (Math.abs(vw - cache.vw) <= 2 && Math.abs(vh - cache.vh) <= 2) {
+            document.documentElement.style.setProperty("--hero-runtime-height", cache.px);
+            desktopHeroHeightCommitted = true;
+            return;
+          }
+          heroDesktopRuntimeCache = null;
         }
 
         if (!frame || !images.length) {
@@ -56,8 +73,14 @@ export function HomeEffects() {
         const requiredHeight = baseViewportHeight - heroTopLift;
         const runtimeHeight = Math.min(requiredHeight, imageBoundHeight);
 
-        document.documentElement.style.setProperty("--hero-runtime-height", `${Math.round(runtimeHeight)}px`);
+        const px = `${Math.round(runtimeHeight)}px`;
+        document.documentElement.style.setProperty("--hero-runtime-height", px);
         desktopHeroHeightCommitted = true;
+        heroDesktopRuntimeCache = {
+          px,
+          vw: window.innerWidth,
+          vh: window.innerHeight
+        };
       };
 
       const queueHeroRuntimeHeightOnce = () => {

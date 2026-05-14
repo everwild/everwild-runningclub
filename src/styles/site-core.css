@@ -74,15 +74,11 @@ html[lang^="zh-"] {
   --ui-font: var(--font-zh);
   --heading-font: var(--font-zh);
   --body-font: var(--font-zh);
-  /* Nav / brand: CJK-first (avoid Segoe shaping Han oddly on Windows) */
-  --header-font: var(--font-zh);
-  /* Match Japanese tuning: CJK reads better slightly heavier than default 400/650 */
+  /* Header chrome uses :root --header-font / --header-link-letter-spacing (same rhythm as EN) */
   --font-body-weight: 450;
   --font-heading-weight: 680;
   --font-strong-weight: 720;
   --header-link-weight: 720;
-  /* Latin-style wide tracking looks “散” on Chinese */
-  --header-link-letter-spacing: 0.04em;
 }
 
 html:lang(en),
@@ -115,12 +111,10 @@ html[data-platform="apple"][lang^="zh-"] {
   --ui-font: var(--font-zh-apple);
   --heading-font: var(--font-zh-apple);
   --body-font: var(--font-zh-apple);
-  --header-font: var(--font-zh-apple);
   --font-body-weight: 455;
   --font-heading-weight: 700;
   --font-strong-weight: 740;
   --header-link-weight: 730;
-  --header-link-letter-spacing: 0.035em;
 }
 
 html[data-platform="apple"]:lang(en),
@@ -258,7 +252,7 @@ textarea {
   font-size: 1.36rem;
   line-height: 1;
   letter-spacing: 0.05em;
-  text-transform: none;
+  text-transform: uppercase;
   font-weight: var(--font-strong-weight);
   color: var(--white);
   transition: color 180ms ease;
@@ -272,12 +266,6 @@ textarea {
   color: rgba(255, 255, 255, 0.66);
   white-space: nowrap;
   transition: color 180ms ease;
-}
-
-html:lang(zh) .brand-copy span,
-html[lang^="zh-"] .brand-copy span {
-  letter-spacing: 0.06em;
-  text-transform: none;
 }
 
 .brand:hover .brand-mark-default,
@@ -326,7 +314,7 @@ html[lang^="zh-"] .brand-copy span {
   font-weight: var(--header-link-weight);
   line-height: 1;
   letter-spacing: var(--header-link-letter-spacing);
-  text-transform: none;
+  text-transform: uppercase;
   transition: color var(--motion-fast) ease;
 }
 
@@ -431,6 +419,7 @@ html[lang^="zh-"] .brand-copy span {
   line-height: 1;
   font-weight: var(--header-link-weight);
   letter-spacing: var(--header-link-letter-spacing);
+  text-transform: uppercase;
 }
 
 .lang-toggle button + button::before {
@@ -728,7 +717,8 @@ body.nav-open .nav-toggle-bar:nth-child(3) {
     text-overflow: ellipsis;
     font-size: 0.86rem;
     line-height: 1.22;
-    letter-spacing: 0.04em;
+    letter-spacing: var(--header-link-letter-spacing);
+    text-transform: uppercase;
   }
 
   .nav-links a {
