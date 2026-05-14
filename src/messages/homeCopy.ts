@@ -2,7 +2,7 @@ import type { Lang } from "@/lib/lang";
 
 export const homeCopy = {
       ja: {
-        pageTitle: "EVERWILD · Running Club",
+        pageTitle: "ERC · EVERWILD Running Club",
         brandLine: "Everwild Running Club",
         navManifesto: "概要",
         navSchedule: "定例ラン",
@@ -113,7 +113,7 @@ export const homeCopy = {
         footerTerms: "利用規約"
       },
       zh: {
-        pageTitle: "EVERWILD · Running Club",
+        pageTitle: "ERC · EVERWILD Running Club",
         brandLine: "Everwild Running Club",
         navManifesto: "关于我们",
         navSchedule: "常规活动",
@@ -224,7 +224,7 @@ export const homeCopy = {
         footerTerms: "使用条款"
       },
       en: {
-        pageTitle: "EVERWILD · Running Club",
+        pageTitle: "ERC · EVERWILD Running Club",
         brandLine: "Everwild Running Club",
         navManifesto: "ABOUT",
         navSchedule: "RUNS",
