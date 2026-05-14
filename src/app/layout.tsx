@@ -42,7 +42,8 @@ export default function RootLayout({
         var p = (window.location && window.location.pathname) || "/";
         var m = p.match(/^\\/(ja|en|zh)(?:\\/|$)/i);
         var lang = m ? m[1].toLowerCase() : "ja";
-        document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+        document.documentElement.lang =
+          lang === "zh" ? "zh-CN" : lang === "ja" ? "ja-JP" : "en";
         var platform = (navigator.platform || "");
         var ua = (navigator.userAgent || "");
         var isApple = /Mac|iPhone|iPad|iPod/i.test(platform) || /Macintosh|Mac OS X|iPhone|iPad|iPod/i.test(ua);

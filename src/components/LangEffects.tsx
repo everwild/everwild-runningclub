@@ -1,11 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
-import type { Lang } from "@/lib/lang";
+import { htmlLangForUiLang, type Lang } from "@/lib/lang";
 
 export function LangEffects({ lang }: { lang: Lang }) {
   const pathname = usePathname();
+
+  /* Font + weight tokens in site-core.css key off `html:lang()` / `html[lang^=…]`. Root layout’s inline script only runs on first parse, so client-side locale changes must update `lang` here or styles stay on the previous language until a full reload. */
+  useLayoutEffect(() => {
+    document.documentElement.lang = htmlLangForUiLang(lang);
+  }, [lang]);
 
   useEffect(() => {
     void lang;
