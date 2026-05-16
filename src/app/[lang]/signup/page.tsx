@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SignupForm } from "@/components/signup/SignupForm";
 import { htmlLangForUiLang, isLang, type Lang } from "@/lib/lang";
-import { SITE_ORIGIN } from "@/lib/site";
+import { ROBOTS_NOINDEX, SITE_ORIGIN } from "@/lib/site";
 import { signupCopy } from "@/messages/signupCopy";
 import "@/styles/signup.css";
 
@@ -22,6 +22,7 @@ export async function generateMetadata({
   return {
     title: t.pageTitle,
     description: t.formBody,
+    robots: ROBOTS_NOINDEX,
     alternates: { canonical: `${SITE_ORIGIN}/${path}` },
     openGraph: {
       title: t.pageTitle,

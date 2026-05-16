@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { ROBOTS_NOINDEX } from "@/lib/site";
+
+export const metadata: Metadata = {
+  robots: ROBOTS_NOINDEX
+};
 
 export default function NotFound() {
   return (

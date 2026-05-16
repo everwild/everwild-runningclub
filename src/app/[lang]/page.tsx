@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { HomeEffects } from "@/components/home/HomeEffects";
 import { HomeMain } from "@/components/home/HomeMain";
 import { htmlLangForUiLang, isLang, type Lang } from "@/lib/lang";
-import { SITE_ORIGIN } from "@/lib/site";
+import { INDEXABLE_HOME_LANG, ROBOTS_NOINDEX, SITE_ORIGIN } from "@/lib/site";
 import { homeCopy } from "@/messages/homeCopy";
 import "@/styles/home.css";
 
@@ -24,6 +24,7 @@ export async function generateMetadata({
   return {
     title: t.pageTitle,
     description: t.heroBody,
+    ...(lang !== INDEXABLE_HOME_LANG ? { robots: ROBOTS_NOINDEX } : {}),
     alternates: {
       canonical: `${SITE_ORIGIN}/${path}`,
       languages: {

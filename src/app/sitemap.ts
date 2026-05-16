@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
-import { SITE_ORIGIN } from "@/lib/site";
+import { INDEXABLE_HOME_LANG, SITE_ORIGIN } from "@/lib/site";
 
 export const dynamic = "force-static";
 
 /** Single canonical homepage for indexing (default locale). */
-const HOME_PATH = "/ja/";
+const HOME_PATH = `/${INDEXABLE_HOME_LANG}/`;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
