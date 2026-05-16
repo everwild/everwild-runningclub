@@ -10,7 +10,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   title: {
-    default: "ERC · EVERWILD Running Club",
+    default: "ERC · EVERWILD Running Club · TOKYO",
     template: "%s"
   },
   icons: {
