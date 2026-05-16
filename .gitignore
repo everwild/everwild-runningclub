@@ -17,6 +17,17 @@
 /.next/
 /out/
 
+# Do not commit static export artifacts at repo root (Pages deploy uses CI `out/` only)
+/ja/
+/en/
+/zh/
+/_next/
+/_not-found/
+/404/
+/index.html
+/index.txt
+/favicon.ico
+
 # production
 /build
 
